@@ -46,7 +46,7 @@ export default function Example() {
                         <span className="sr-only">Your Company</span>
                         <img
                             alt=""
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfpRWYYBJU8PAWykrFwzxfl8ISf2aQhX4kHw&s"
+                            src="https://icolor.vn/wp-content/uploads/2024/08/logo-lv-1.jpg"
                             className="h-8 w-auto"
                         />
                     </a>
@@ -64,7 +64,7 @@ export default function Example() {
                 <PopoverGroup className="hidden lg:flex lg:gap-x-12">
                     <Popover className="relative">
                         <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
-                            Product
+                            Thông tin
                             <ChevronDownIcon aria-hidden="true" className="size-5 flex-none text-gray-400" />
                         </PopoverButton>
 
@@ -107,21 +107,21 @@ export default function Example() {
                     </Popover>
 
                     <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                        Features
+                        Kết nối
                     </a>
                     <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                        Marketplace
+                        Hỗ trợ
                     </a>
                     <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                        Company
+                        Tải ứng dụng
                     </a>
                 </PopoverGroup>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end space-x-6">
                     <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                        Log in  <span aria-hidden="true">&rarr;</span>
+                        Đăng Nhập  <span aria-hidden="true">&rarr;</span>
                     </a>
                     <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                        Register  <span aria-hidden="true">&rarr;</span>
+                        Đăng Kí  <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
             </nav>

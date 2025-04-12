@@ -37,10 +37,10 @@ export default function Carousel() {
                                 <img src="https://intphcm.com/data/upload/banner-thoi-trang-nam.jpg" className="w-full max-h-64 object-contain" alt="Slide 1" />
                             </TECarouselItem>
                             <TECarouselItem itemID={2} className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none">
-                                <img src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp" className="w-full max-h-64 object-contain" alt="Slide 2" />
+                                <img src="https://cf.shopee.vn/file/sg-11134258-7reoe-m8ec86jav73658_xxhdpi" className="w-full max-h-64 object-contain" alt="Slide 2" />
                             </TECarouselItem>
                             <TECarouselItem itemID={3} className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none">
-                                <img src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp" className="w-full max-h-64 object-contain" alt="Slide 3" />
+                                <img src="https://cf.shopee.vn/file/sg-11134258-7reo9-m8d6h84f36onbe_xxhdpi" className="w-full max-h-64 object-contain" alt="Slide 3" />
                             </TECarouselItem>
                         </div>
                     </TECarousel>

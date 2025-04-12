@@ -5,11 +5,15 @@ import './index.css'
 import Carousel from './components/Carousel';
 import Header from './components/Header';
 import Footers from './components/Footers';
+import CategoryGrid from './components/CategoryGrid'
+import FlashSale from './components/FlashSale'
 function App() {
   return (
     <>
       <Header />
       <Carousel />
+      <CategoryGrid />
+      <FlashSale />
       <Footers />
     </>
   );
