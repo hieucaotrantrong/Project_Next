@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'; // ← đúng import
+
 'use client'
 
 import { useState } from 'react'
@@ -117,9 +119,15 @@ export default function Example() {
                     </a>
                 </PopoverGroup>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end space-x-6">
-                    <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                        Đăng Nhập  <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    {/*-----------------------------
+                    Login 
+                     -------------------------------*/}
+                    <Link to="/login" className="text-sm/6 font-semibold text-gray-900">
+                        Đăng Nhập <span aria-hidden="true">&rarr;</span>
+                    </Link>
+                    {/*-----------------------------
+                    Register
+                     -------------------------------*/}
                     <a href="#" className="text-sm/6 font-semibold text-gray-900">
                         Đăng Kí  <span aria-hidden="true">&rarr;</span>
                     </a>
