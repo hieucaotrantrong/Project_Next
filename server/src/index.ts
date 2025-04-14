@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import database from './config/database';
-import authRoutes from './routes/authRoutes'; // Thêm dòng này
+import authRoutes from './routes/authRoutes';
+
 
 /*------------------------------------
 Cấu hình môi trường

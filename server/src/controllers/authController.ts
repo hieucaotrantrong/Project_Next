@@ -51,7 +51,7 @@ export default {
     /*-----------------------------------------
     Create Api Login
     -------------------------------------------*/
-    async login(req: Request, res: Response) {
+    async login(req: Request, res: Response, next: unknown) {
         try {
             const { email, password } = req.body;
 
