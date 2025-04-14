@@ -2,20 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const PrivateRoute = ({ children }) => {
-    const [token, setToken] = useState(null);
+    const [authStatus, setAuthStatus] = useState('checking'); // 'checking', 'authenticated', 'unauthenticated'
 
     useEffect(() => {
-        const storedToken = localStorage.getItem('token');
-        setToken(storedToken);
-    }, []);  // Chỉ chạy một lần khi component được mount
+        const token = localStorage.getItem('token');
+        // Kiểm tra cả trường hợp token rỗng
+        if (token && token.trim() !== '') {
+            setAuthStatus('authenticated');
+        } else {
+            setAuthStatus('unauthenticated');
+        }
+    }, []);
 
-    // Nếu token chưa được xác định (do vẫn đang kiểm tra), có thể trả về null hoặc loading state
-    if (token === null) {
+    if (authStatus === 'checking') {
         return <div>Loading...</div>;
     }
 
-    // Nếu không có token, chuyển hướng về trang login
-    return token ? children : <Navigate to="/login" replace />;
+    if (authStatus === 'unauthenticated') {
+        return <Navigate to="/login" replace />;
+    }
+
+    return children;
 };
 
 export default PrivateRoute;
