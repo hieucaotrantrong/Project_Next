@@ -128,9 +128,9 @@ export default function Example() {
                     {/*-----------------------------
                     Register
                      -------------------------------*/}
-                    <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                        Đăng Kí  <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    <Link to="/singin" className="text-sm/6 font-semibold text-gray-900">
+                        Đăng Kí <span aria-hidden="true">&rarr;</span>
+                    </Link>
                 </div>
             </nav>
         </header>

@@ -1,32 +1,43 @@
 import express from 'express';
 import cors from 'cors';
-import productRoutes from './routes/product.routes';
-import { db } from './config/db';
+import dotenv from 'dotenv';
+import database from './config/database';
+import authRoutes from './routes/authRoutes'; // Thêm dòng này
+
 /*------------------------------------
-
+Cấu hình môi trường
 --------------------------------------*/
-const app = express();
-const PORT = 5000;
+dotenv.config();
 
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+/*------------------------------------
+Middleware
+--------------------------------------*/
 app.use(cors());
 app.use(express.json());
 
 /*------------------------------------
 Routes
 --------------------------------------*/
-app.use('/api/products', productRoutes);
+app.use('/api/auth', authRoutes); // Thêm dòng này
 
+/*------------------------------------
+Khởi động server
+--------------------------------------*/
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
 
 /*------------------------------------
-Check database connection
+Kiểm tra kết nối database
 --------------------------------------*/
-db.getConnection()
+database.getConnection()
     .then((connection) => {
-        console.log('Connect succeed!');
+        console.log('Database connected successfully!');
+        connection.release();
     })
     .catch((err) => {
-        console.log('Error connect', err);
-    })
+        console.error('Database connection failed:', err);
+    });
