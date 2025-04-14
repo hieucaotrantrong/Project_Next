@@ -46,7 +46,7 @@ export default function Home() {
         if (confirmLogout) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            navigate('/login');
+            navigate('/');
         }
     };
 
