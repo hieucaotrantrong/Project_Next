@@ -8,7 +8,7 @@ import FlashSale from './components/FlashSale';
 import MallSection from './components/MallSection';
 import Home from './components/Home';
 import Login from './pages/Login';
-import Singin from './pages/Signup';
+import Signup from './pages/Signup';
 import PrivateRoute from './service/PrivateRoute';
 
 function HomePage() {
@@ -24,20 +24,29 @@ function HomePage() {
   );
 }
 
+function HomeLoggedInPage() {
+  return (
+    <>
+      <Home />
+      <Carousel />
+      <Footers />
+    </>
+  );
+}
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/singin" element={<Singin />} />
+        <Route path="/signup" element={<Signup />} />
 
-        {/* Đảm bảo chỉ người đã đăng nhập mới có thể truy cập vào /home */}
         <Route
           path="/home"
           element={
             <PrivateRoute>
-              <Home />
+              <HomeLoggedInPage />
             </PrivateRoute>
           }
         />
