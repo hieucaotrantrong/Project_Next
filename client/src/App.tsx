@@ -10,6 +10,8 @@ import Home from './components/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import PrivateRoute from './service/PrivateRoute';
+import CartPage from "./components/CartPage";
+import ProductDetail from "./components/ProductDetail";
 
 function HomePage() {
   return (
@@ -28,7 +30,9 @@ function HomeLoggedInPage() {
   return (
     <>
       <Home />
+
       <Carousel />
+      <CartPage />
       <Footers />
     </>
   );
@@ -41,7 +45,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-
+        <Route path="/" element={<CartPage />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route
           path="/home"
           element={
