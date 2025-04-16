@@ -9,6 +9,7 @@ import MallSection from './components/MallSection';
 import Home from './components/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import AdminPage from './pages/AdminPage';
 import PrivateRoute from './service/PrivateRoute';
 import CartPage from "./components/CartPage";
 import ProductDetail from "./components/ProductDetail";
@@ -46,6 +47,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/" element={<CartPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route
