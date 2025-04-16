@@ -33,6 +33,7 @@ function HomeLoggedInPage() {
 
       <Carousel />
       <CartPage />
+      {/* <MallSection /> */}
       <Footers />
     </>
   );

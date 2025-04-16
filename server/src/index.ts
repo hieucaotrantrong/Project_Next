@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import database from './config/database';
 import authRoutes from './routes/authRoutes';
-
+import productRoutes from './routes/productRoutes';
 
 /*------------------------------------
 Cấu hình môi trường
@@ -22,7 +22,8 @@ app.use(express.json());
 /*------------------------------------
 Routes
 --------------------------------------*/
-app.use('/api/auth', authRoutes); // Thêm dòng này
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
 
 /*------------------------------------
 Khởi động server
