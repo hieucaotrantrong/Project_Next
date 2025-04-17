@@ -10,6 +10,21 @@ export const getAllProducts = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Lỗi khi lấy sản phẩm' });
     }
 };
+export const getProductById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+        const [rows] = await pool.query('SELECT * FROM products WHERE id = ?', [id]);
+
+        if ((rows as any[]).length > 0) {
+            res.json((rows as any[])[0]);
+        } else {
+            res.status(404).json({ error: 'Sản phẩm không tồn tại' });
+        }
+    } catch (err) {
+        res.status(500).json({ error: 'Lỗi khi lấy sản phẩm' });
+    }
+};
 
 export const createProduct = async (req: Request, res: Response) => {
     const { title, originalPrice, price, discount, tag, image } = req.body;

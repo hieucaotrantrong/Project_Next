@@ -1,90 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-const products = [
-    {
-        id: 1,
-        image: "/assets/vay.jpg",
-        title: "KEM PHỤC HỒI LA ROCHE-POSAY CICAPLAST BAUME B5+",
-        originalPrice: "699.000",
-        price: "578.000",
-        discount: 13,
-        tag: "Váy đầm (còn được gọi là váy dài hoặc váy choàng, áo đầm hay đơn giản là đầm) là một trang phục truyền thống được phụ nữ hoặc các cô gái mặc, bao gồm một chiếc váy với một chiếc áo lót kèm theo (hoặc một chiếc áo lót phù hợp mang lại hiệu quả của một bộ quần áo một mảnh)",
-    },
-    {
-        id: 2,
-        image: "/assets/vay.jpg",
-        title: "NƯỚC TẨY TRANG LÀM SẠCH SÂU DỊU NHẸ CHO MỌI LOẠI DA",
-        originalPrice: "199.000",
-        price: "145.000",
-        discount: 17,
-        tag: "ĐÃ BÁN 149",
-    },
-    {
-        id: 3,
-        image: "/assets/vay.jpg",
-        title: "[CHÍNH HÃNG ĐỘC QUYỀN] SMOOTHIE TẨY TẾ BÀO CHẾT DOVE",
-        originalPrice: "199.000",
-        price: "159.000",
-        discount: 15,
-        tag: "ĐANG BÁN CHẠY",
-    },
-    {
-        id: 4,
-        image: "/assets/vay.jpg",
-        title: "BAO CAO SU DUREX PERFORMA KÉO DÀI THỜI GIAN",
-        originalPrice: "300.000",
-        price: "219.000",
-        discount: 27,
-        tag: "ĐANG BÁN CHẠY",
-    },
-    {
-        id: 5,
-        image: "/assets/vay.jpg",
-        title: "BAO CAO SU DUREX PERFORMA KÉO DÀI THỜI GIAN",
-        originalPrice: "300.000",
-        price: "219.000",
-        discount: 27,
-        tag: "ĐANG BÁN CHẠY",
-    },
-    {
-        id: 6,
-        image: "/assets/vay.jpg",
-        title: "BAO CAO SU DUREX PERFORMA KÉO DÀI THỜI GIAN",
-        originalPrice: "300.000",
-        price: "219.000",
-        discount: 27,
-        tag: "ĐANG BÁN CHẠY",
-    },
-    {
-        id: 7,
-        image: "/assets/vay.jpg",
-        title: "BAO CAO SU DUREX PERFORMA KÉO DÀI THỜI GIAN",
-        originalPrice: "300.000",
-        price: "219.000",
-        discount: 27,
-        tag: "ĐANG BÁN CHẠY",
-    },
-    {
-        id: 8,
-        image: "/assets/vay.jpg",
-        title: "BAO CAO SU DUREX PERFORMA KÉO DÀI THỜI GIAN",
-        originalPrice: "300.000",
-        price: "219.000",
-        discount: 27,
-        tag: "ĐANG BÁN CHẠY",
-    },
-
-];
+import axios from "axios";
 
 const ProductDetail = () => {
     const { id } = useParams();
-    const product = products.find(p => p.id === parseInt(id));
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-    if (!product) return <div className="p-6">Không tìm thấy sản phẩm.</div>;
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+                setProduct(res.data);
+            } catch (err) {
+                setError("Không tìm thấy sản phẩm.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProduct();
+    }, [id]);
+
+    if (loading) return <div className="p-6">Đang tải...</div>;
+    if (error) return <div className="p-6 text-red-500">{error}</div>;
+    if (!product) return null;
 
     return (
-
         <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
             <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
                 <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">

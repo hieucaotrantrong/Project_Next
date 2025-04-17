@@ -31,7 +31,6 @@ function HomeLoggedInPage() {
   return (
     <>
       <Home />
-
       <Carousel />
       <CartPage />
       {/* <MallSection /> */}

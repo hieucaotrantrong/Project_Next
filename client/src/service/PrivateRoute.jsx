@@ -6,7 +6,7 @@ const PrivateRoute = ({ children }) => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        // Kiểm tra cả trường hợp token rỗng
+    
         if (token && token.trim() !== '') {
             setAuthStatus('authenticated');
         } else {
