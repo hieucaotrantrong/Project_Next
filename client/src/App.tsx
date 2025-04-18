@@ -14,6 +14,7 @@ import PrivateRoute from './service/PrivateRoute';
 import CartPage from "./components/CartPage";
 import ProductDetail from "./components/ProductDetail";
 import ChatBotIcon from "./components/ChatBotIcon";
+import CartPayPage from "./components/CartPayPage";
 /*----------------------------------
 Home Create
 -----------------------------------*/
@@ -55,6 +56,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/" element={<CartPage />} />
+        <Route path="/cartpay" element={<CartPayPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route
           path="/home"

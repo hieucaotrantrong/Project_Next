@@ -50,6 +50,7 @@ export const getProductByName = async (req: Request, res: Response): Promise<Res
 };
 */
 /*----------------------------------
+Create Product
 -----------------------------------*/
 export const createProduct = async (req: Request, res: Response) => {
     const { title, originalPrice, price, discount, tag, image } = req.body;

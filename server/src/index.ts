@@ -5,6 +5,7 @@ import database from './config/database';
 import authRoutes from './routes/authRoutes';
 import productRoutes from './routes/productRoutes';
 import chatbot from './routes/chatbot';
+import orderRoutes from "./routes/order.routes";
 /*------------------------------------
 Cấu hình môi trường
 --------------------------------------*/
@@ -25,6 +26,7 @@ Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/chatbot', chatbot);
+app.use('/api/orders', orderRoutes);
 
 /*------------------------------------
 Khởi động server
