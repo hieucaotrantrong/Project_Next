@@ -111,7 +111,9 @@ export default function Home() {
 
                             </div>
 
-                            {/* Đăng xuất */}
+                            {/*----------------------------------
+                            Logout
+                            -----------------------------------*/}
                             <button
                                 onClick={handleLogout}
                                 className="text-sm font-semibold text-gray-900 hover:underline"

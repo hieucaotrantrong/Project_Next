@@ -12,7 +12,7 @@ const AdminPage = () => {
         image: '',
     });
     const [editingProduct, setEditingProduct] = useState(null);
-    const [preview, setPreview] = useState(''); 
+    const [preview, setPreview] = useState('');
 
     // Lấy danh sách sản phẩm
     const fetchProducts = async () => {
@@ -28,16 +28,19 @@ const AdminPage = () => {
         fetchProducts();
     }, []);
 
-    // Thêm hoặc sửa sản phẩm
+    /*----------------------------------
+     -----------------------------------*/
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             if (editingProduct) {
-                // Cập nhật sản phẩm
+                /*----------------------------------
+                -----------------------------------*/
                 await axios.put(`http://localhost:5000/api/products/${editingProduct.id}`, form);
                 setEditingProduct(null);
             } else {
-                // Thêm sản phẩm mới
+                /*----------------------------------
+                 -----------------------------------*/
                 await axios.post('http://localhost:5000/api/products', form);
             }
             setForm({
@@ -55,7 +58,8 @@ const AdminPage = () => {
         }
     };
 
-    // Xóa sản phẩm
+    /*----------------------------------
+    -----------------------------------*/
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:5000/api/products/${id}`);
@@ -65,7 +69,8 @@ const AdminPage = () => {
         }
     };
 
-    // Đặt form để sửa sản phẩm
+    /*----------------------------------
+    -----------------------------------*/
     const handleEdit = (product) => {
         setEditingProduct(product);
         setForm({
@@ -76,7 +81,7 @@ const AdminPage = () => {
             tag: product.tag,
             image: product.image,
         });
-        setPreview(product.image); // Đặt preview cho ảnh khi sửa sản phẩm
+        setPreview(product.image);
     };
 
     return (
@@ -128,10 +133,10 @@ const AdminPage = () => {
                         onChange={(e) => {
                             const file = e.target.files[0];
                             if (file) {
-                                const imagePath = `/assets/${file.name}`; // Lưu đường dẫn ảnh
+                                const imagePath = `/assets/${file.name}`;
                                 setForm({ ...form, image: imagePath });
 
-                                // Hiển thị ảnh preview
+
                                 const reader = new FileReader();
                                 reader.onloadend = () => {
                                     setPreview(reader.result);

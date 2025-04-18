@@ -13,7 +13,10 @@ import AdminPage from './pages/AdminPage';
 import PrivateRoute from './service/PrivateRoute';
 import CartPage from "./components/CartPage";
 import ProductDetail from "./components/ProductDetail";
-
+import ChatBotIcon from "./components/ChatBotIcon";
+/*----------------------------------
+Home Create
+-----------------------------------*/
 function HomePage() {
   return (
     <>
@@ -26,19 +29,23 @@ function HomePage() {
     </>
   );
 }
-
+/*----------------------------------
+HomePage
+-----------------------------------*/
 function HomeLoggedInPage() {
   return (
     <>
       <Home />
       <Carousel />
       <CartPage />
-      {/* <MallSection /> */}
+      <ChatBotIcon />
       <Footers />
     </>
   );
 }
-
+/*----------------------------------
+Router
+-----------------------------------*/
 function App() {
   return (
     <Router>

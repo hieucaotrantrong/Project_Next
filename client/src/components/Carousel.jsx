@@ -6,7 +6,8 @@ export default function Carousel() {
     return (
         <div className="w-full px-10 py-6">
             <div className="flex items-start justify-between gap-4">
-                {/* Bên trái */}
+                {/*----------------------------------
+                -----------------------------------*/}
                 <div className="w-1/4">
                     <div className="flex items-start gap-3 mb-2">
                         <Truck className="text-blue-600" />

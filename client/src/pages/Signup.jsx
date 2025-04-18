@@ -60,7 +60,8 @@ export default function Signup() {
                 cpassword: ''
             });
 
-            // Chuyển hướng sau 3 giây
+            /*----------------------------------
+            -----------------------------------*/
             setTimeout(() => {
                 navigate('/login');
             }, 3000);

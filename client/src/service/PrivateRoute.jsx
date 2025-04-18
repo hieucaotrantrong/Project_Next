@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const PrivateRoute = ({ children }) => {
-    const [authStatus, setAuthStatus] = useState('checking'); // 'checking', 'authenticated', 'unauthenticated'
+    const [authStatus, setAuthStatus] = useState('checking');
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-    
+
         if (token && token.trim() !== '') {
             setAuthStatus('authenticated');
         } else {

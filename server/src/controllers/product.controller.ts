@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import pool from '../config/database';
 
-
+/*----------------------------------
+-----------------------------------*/
 export const getAllProducts = async (req: Request, res: Response) => {
     try {
         const [rows] = await pool.query('SELECT * FROM products');
@@ -10,6 +11,9 @@ export const getAllProducts = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Lỗi khi lấy sản phẩm' });
     }
 };
+
+/*----------------------------------
+-----------------------------------*/
 export const getProductById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
@@ -26,6 +30,27 @@ export const getProductById = async (req: Request, res: Response) => {
     }
 };
 
+/*----------------------------------
+-----------------------------------*/
+/*
+export const getProductByName = async (req: Request, res: Response): Promise<Response> => {
+    const { name } = req.params;
+
+    try {
+        const [rows] = await pool.query('SELECT * FROM products WHERE name LIKE ?', [`%${name}%`]);
+
+        if ((rows as any[]).length === 0) {
+            return res.status(404).json({ error: 'Sản phẩm không tồn tại' });
+        }
+
+        return res.json((rows as any)[0]);
+    } catch (err) {
+        return res.status(500).json({ error: 'Lỗi máy chủ' });
+    }
+};
+*/
+/*----------------------------------
+-----------------------------------*/
 export const createProduct = async (req: Request, res: Response) => {
     const { title, originalPrice, price, discount, tag, image } = req.body;
 
@@ -50,6 +75,8 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 
 
+/*----------------------------------
+-----------------------------------*/
 export const updateProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { title, originalPrice, price, discount, tag, image } = req.body;
@@ -71,6 +98,8 @@ export const updateProduct = async (req: Request, res: Response) => {
 };
 
 
+/*----------------------------------
+-----------------------------------*/
 export const deleteProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
 

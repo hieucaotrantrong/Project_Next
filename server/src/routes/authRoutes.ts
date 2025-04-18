@@ -4,12 +4,16 @@ import authController from '../controllers/authController';
 
 const router = Router();
 
-// Đăng ký
+/*----------------------------------
+Register Router
+-----------------------------------*/
 router.post('/signup', (req, res, next) => {
     authController.signup(req, res, next).catch(next);
 });
 
-// Đăng nhập
+/*----------------------------------
+Login Router
+-----------------------------------*/
 router.post('/login', (req, res, next) => {
     authController.login(req, res, next).catch(next);
 });

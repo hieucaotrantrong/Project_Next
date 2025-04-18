@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import database from './config/database';
 import authRoutes from './routes/authRoutes';
 import productRoutes from './routes/productRoutes';
-
+import chatbot from './routes/chatbot';
 /*------------------------------------
 Cấu hình môi trường
 --------------------------------------*/
@@ -24,6 +24,7 @@ Routes
 --------------------------------------*/
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/chatbot', chatbot);
 
 /*------------------------------------
 Khởi động server
