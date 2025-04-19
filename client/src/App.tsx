@@ -15,6 +15,7 @@ import CartPage from "./components/CartPage";
 import ProductDetail from "./components/ProductDetail";
 import ChatBotIcon from "./components/ChatBotIcon";
 import CartPayPage from "./components/CartPayPage";
+import SupportPage from "./components/SupportPage";
 /*----------------------------------
 Home Create
 -----------------------------------*/
@@ -58,6 +59,7 @@ function App() {
         <Route path="/" element={<CartPage />} />
         <Route path="/cartpay" element={<CartPayPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/support" element={<SupportPage />} />
         <Route
           path="/home"
           element={

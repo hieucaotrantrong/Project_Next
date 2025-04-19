@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes';
 import productRoutes from './routes/productRoutes';
 import chatbot from './routes/chatbot';
 import orderRoutes from "./routes/order.routes";
+import supportRouter from "./routes/support";
 /*------------------------------------
 Cấu hình môi trường
 --------------------------------------*/
@@ -27,7 +28,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/chatbot', chatbot);
 app.use('/api/orders', orderRoutes);
-
+app.use("/api/support", supportRouter);
 /*------------------------------------
 Khởi động server
 --------------------------------------*/
@@ -36,7 +37,7 @@ app.listen(PORT, () => {
 });
 
 /*------------------------------------
-Kiểm tra kết nối database
+Check connect Database
 --------------------------------------*/
 database.getConnection()
     .then((connection) => {

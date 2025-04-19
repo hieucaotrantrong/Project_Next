@@ -93,7 +93,9 @@ export default function Home() {
                     </Popover>
 
                     <a href="#" className="text-sm font-semibold text-gray-900">Kết nối</a>
-                    <a href="#" className="text-sm font-semibold text-gray-900">Hỗ trợ</a>
+                    <Link to="/support" className="text-sm font-semibold text-gray-900">
+                        Hỗ trợ
+                    </Link>
                     <a href="#" className="text-sm font-semibold text-gray-900">Tải ứng dụng</a>
                 </PopoverGroup>
 
