@@ -23,7 +23,7 @@ const CartPayPage = () => {
             return;
         }
 
-        setIsLoading(true); 
+        setIsLoading(true);
 
         try {
             const res = await axios.post("http://localhost:5000/api/orders", {
@@ -37,7 +37,7 @@ const CartPayPage = () => {
 
             if (res.status === 200) {
                 alert(" Đặt hàng thành công!");
-             
+
                 setFullName("");
                 setPhone("");
                 setAddress("");
@@ -46,7 +46,7 @@ const CartPayPage = () => {
             console.error(err);
             alert(" Đặt hàng thất bại. Vui lòng thử lại.");
         } finally {
-            setIsLoading(false); /
+            setIsLoading(false);
         }
     };
 
