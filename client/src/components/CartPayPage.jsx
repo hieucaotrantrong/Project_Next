@@ -7,12 +7,13 @@ const CartPayPage = () => {
     const product = location.state;
 
     const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState(""); // Thêm state cho email
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     const handleOrder = async () => {
-        if (!fullName || !phone || !address) {
+        if (!fullName || !phone || !address || !email) {
             alert("Vui lòng điền đầy đủ thông tin.");
             return;
         }
@@ -23,11 +24,19 @@ const CartPayPage = () => {
             return;
         }
 
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Email không hợp lệ.");
+            return;
+        }
+
         setIsLoading(true);
 
         try {
             const res = await axios.post("http://localhost:5000/api/orders", {
                 fullName,
+                email, // Thêm email vào request
                 phone,
                 address,
                 productId: product.id,
@@ -36,23 +45,19 @@ const CartPayPage = () => {
             });
 
             if (res.status === 200) {
-                alert(" Đặt hàng thành công!");
-
+                alert("Đặt hàng thành công!");
                 setFullName("");
+                setEmail("");
                 setPhone("");
                 setAddress("");
             }
         } catch (err) {
             console.error(err);
-            alert(" Đặt hàng thất bại. Vui lòng thử lại.");
+            alert("Đặt hàng thất bại. Vui lòng thử lại.");
         } finally {
             setIsLoading(false);
         }
     };
-
-    if (!product) {
-        return <p className="p-4 text-red-500">Không có sản phẩm nào được chọn.</p>;
-    }
 
     return (
         <div className="p-4 max-w-6xl mx-auto">
@@ -86,9 +91,19 @@ const CartPayPage = () => {
                             <input
                                 type="text"
                                 className="w-full p-3 border rounded-md shadow-sm"
-                                placeholder=""
                                 value={fullName}
                                 onChange={(e) => setFullName(e.target.value)}
+                            />
+                        </div>
+
+                        {/* Thêm trường email */}
+                        <div>
+                            <label className="block text-lg font-medium mb-2">Email</label>
+                            <input
+                                type="email"
+                                className="w-full p-3 border rounded-md shadow-sm"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
 
@@ -97,7 +112,6 @@ const CartPayPage = () => {
                             <input
                                 type="text"
                                 className="w-full p-3 border rounded-md shadow-sm"
-                                placeholder=""
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                             />
@@ -108,13 +122,11 @@ const CartPayPage = () => {
                             <input
                                 type="text"
                                 className="w-full p-3 border rounded-md shadow-sm"
-                                placeholder=""
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
                             />
                         </div>
 
-                        {/* Nút xác nhận đặt hàng */}
                         <button
                             onClick={handleOrder}
                             className={`w-full ${isLoading ? 'bg-gray-400' : 'bg-red-500 hover:bg-red-600'} text-white py-3 rounded-md text-lg`}
@@ -130,3 +142,6 @@ const CartPayPage = () => {
 };
 
 export default CartPayPage;
+
+
+
