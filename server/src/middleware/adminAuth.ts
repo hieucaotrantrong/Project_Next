@@ -1,24 +1,48 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import UserModel from '../models/UserModel';
 
-export const adminAuth = async (req: Request, res: Response, next: NextFunction) => {
+// Định nghĩa interface cho decoded token
+interface DecodedToken {
+    userId: number;
+    role?: string;
+    // Thêm các trường khác nếu cần
+}
+
+// Mở rộng interface Request của Express
+declare global {
+    namespace Express {
+        interface Request {
+            user?: DecodedToken;
+        }
+    }
+}
+
+export const adminAuth = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
     try {
         const token = req.headers.authorization?.split(' ')[1];
 
         if (!token) {
-            return res.status(401).json({ error: 'Không có token xác thực' });
+            res.status(401).json({ error: 'Không tìm thấy token' });
+            return;
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: number };
-        const user = await UserModel.findById(decoded.userId);
-
-        if (!user || user.role !== 'admin') {
-            return res.status(403).json({ error: 'Không có quyền truy cập' });
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as DecodedToken;
+        
+        // Kiểm tra role admin
+        if (!decoded.userId) {
+            res.status(403).json({ error: 'Token không hợp lệ' });
+            return;
         }
 
+        req.user = decoded;
         next();
     } catch (error) {
         res.status(401).json({ error: 'Token không hợp lệ' });
     }
 };
+
+

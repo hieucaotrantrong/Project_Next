@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import SupportManagement from '../components/SupportManagement';
 
 const AdminPage = () => {
+    const [activeTab, setActiveTab] = useState('products');
     const [products, setProducts] = useState([]);
     const [form, setForm] = useState({
         title: '',
@@ -14,17 +15,6 @@ const AdminPage = () => {
     });
     const [editingProduct, setEditingProduct] = useState(null);
     const [preview, setPreview] = useState('');
-    const [activeTab, setActiveTab] = useState('products');
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        const confirmLogout = window.confirm('Bạn có chắc chắn muốn đăng xuất không?');
-        if (confirmLogout) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            navigate('/login');
-        }
-    };
 
     const fetchProducts = async () => {
         try {
@@ -39,19 +29,14 @@ const AdminPage = () => {
         fetchProducts();
     }, []);
 
-    /*----------------------------------
-     -----------------------------------*/
+    // Giữ nguyên các hàm xử lý sản phẩm
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             if (editingProduct) {
-                /*----------------------------------
-                -----------------------------------*/
                 await axios.put(`http://localhost:5000/api/products/${editingProduct.id}`, form);
                 setEditingProduct(null);
             } else {
-                /*----------------------------------
-                 -----------------------------------*/
                 await axios.post('http://localhost:5000/api/products', form);
             }
             setForm({
@@ -69,8 +54,6 @@ const AdminPage = () => {
         }
     };
 
-    /*----------------------------------
-    -----------------------------------*/
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:5000/api/products/${id}`);
@@ -80,8 +63,6 @@ const AdminPage = () => {
         }
     };
 
-    /*----------------------------------
-    -----------------------------------*/
     const handleEdit = (product) => {
         setEditingProduct(product);
         setForm({
@@ -97,38 +78,24 @@ const AdminPage = () => {
 
     return (
         <div className="max-w-6xl mx-auto p-6">
-            {/* Header với nút đăng xuất */}
-            <div className="flex justify-between items-center mb-8">
-                <h1 className="text-3xl font-bold">Trang Quản Trị</h1>
-                <button
-                    onClick={handleLogout}
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
-                >
-                    <span>Đăng xuất</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-                    </svg>
-                </button>
-            </div>
-
             {/* Tabs */}
-            <div className="flex gap-4 mb-6">
+            <div className="flex gap-4 mb-6 justify-center">
                 <button
                     onClick={() => setActiveTab('products')}
-                    className={`px-4 py-2 rounded ${
+                    className={`px-6 py-2 rounded-lg ${
                         activeTab === 'products' 
                             ? 'bg-blue-600 text-white' 
-                            : 'bg-gray-200'
+                            : 'bg-gray-200 hover:bg-gray-300'
                     }`}
                 >
                     🛒 Quản lý sản phẩm
                 </button>
                 <button
                     onClick={() => setActiveTab('support')}
-                    className={`px-4 py-2 rounded ${
+                    className={`px-6 py-2 rounded-lg ${
                         activeTab === 'support' 
                             ? 'bg-blue-600 text-white' 
-                            : 'bg-gray-200'
+                            : 'bg-gray-200 hover:bg-gray-300'
                     }`}
                 >
                     📬 Quản lý hỗ trợ
@@ -137,8 +104,7 @@ const AdminPage = () => {
 
             {/* Content */}
             {activeTab === 'products' ? (
-                // Phần quản lý sản phẩm hiện tại của bạn
-                <div>
+                <>
                     <h1 className="text-3xl font-bold mb-6 text-center">🛒 Quản lý sản phẩm</h1>
 
                     {/* Form */}
@@ -251,15 +217,14 @@ const AdminPage = () => {
                             </div>
                         ))}
                     </div>
-                </div>
+                </>
             ) : (
-                <div>
-                    {/* Phần quản lý hỗ trợ sẽ được thêm sau */}
-                </div>
+                <SupportManagement />
             )}
         </div>
     );
 };
 
 export default AdminPage;
+
 
