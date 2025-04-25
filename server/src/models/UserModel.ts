@@ -26,7 +26,7 @@ export default {
         return users.length > 0 ? users[0] : null;
     },
 
-    // Thêm method mới để tìm user bằng ID
+
     async findById(id: number): Promise<User | null> {
         const [rows] = await pool.execute(
             'SELECT * FROM users WHERE id = ?',

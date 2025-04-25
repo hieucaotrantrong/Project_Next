@@ -1,8 +1,0 @@
-CREATE TABLE notifications (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_email VARCHAR(255) NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    message TEXT NOT NULL,
-    read BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
