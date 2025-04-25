@@ -17,6 +17,7 @@ export default function Login() {
             const { token, user } = response.data;
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('userEmail', user.email); // Thêm dòng này
 
             // Kiểm tra role và chuyển hướng
             if (user.role === 'admin') {
@@ -108,3 +109,4 @@ export default function Login() {
 
     );
 }
+

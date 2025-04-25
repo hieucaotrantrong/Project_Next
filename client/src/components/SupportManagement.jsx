@@ -33,15 +33,31 @@ const SupportManagement = () => {
     const handleReply = async (requestId) => {
         try {
             const token = localStorage.getItem('token');
+            
+            // Log để debug
+            console.log('Sending reply:', {
+                requestId,
+                reply,
+                token
+            });
+
             await axios.post(
                 `http://localhost:5000/api/support/${requestId}/reply`,
                 { reply },
-                { headers: { Authorization: `Bearer ${token}` } }
+                { 
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    } 
+                }
             );
+
             setReply('');
             setSelectedRequest(null);
             fetchRequests(); // Refresh danh sách
+            alert('Phản hồi đã được gửi thành công!');
         } catch (err) {
+            console.error('Error sending reply:', err);
             alert('Không thể gửi phản hồi. Vui lòng thử lại.');
         }
     };
@@ -139,3 +155,4 @@ const SupportManagement = () => {
 };
 
 export default SupportManagement;
+

@@ -16,6 +16,7 @@ import {
     XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid';
+import Notifications from './Notifications';
 
 const products = [
     { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -102,6 +103,7 @@ export default function Home() {
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end space-x-6">
                     {user ? (
                         <>
+                            <Notifications />
                             {/* Thông tin người dùng */}
                             <div className="flex items-center space-x-2">
                                 <img
@@ -109,8 +111,7 @@ export default function Home() {
                                     alt="avatar"
                                     className="w-8 h-8 rounded-full"
                                 />
-                                <p>Xin chào, {user.first_name}  </p>
-
+                                <p>Xin chào, {user.first_name}</p>
                             </div>
 
                             {/*----------------------------------
@@ -139,3 +140,5 @@ export default function Home() {
         </header>
     );
 }
+
+

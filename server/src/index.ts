@@ -7,6 +7,7 @@ import productRoutes from './routes/productRoutes';
 import chatbot from './routes/chatbot';
 import orderRoutes from "./routes/order.routes";
 import supportRouter from "./routes/support";
+import notificationsRoutes from './routes/notifications';
 /*------------------------------------
 Dotnev
 --------------------------------------*/
@@ -29,6 +30,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/chatbot', chatbot);
 app.use('/api/orders', orderRoutes);
 app.use("/api/support", supportRouter);
+app.use('/api/notifications', notificationsRoutes);
 /*------------------------------------
 Start Servers
 --------------------------------------*/
