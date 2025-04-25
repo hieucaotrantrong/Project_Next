@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SupportManagement from '../components/SupportManagement';
+import OrderManagement from '../components/OrderManagement';
 
 const AdminPage = () => {
     const [activeTab, setActiveTab] = useState('products');
@@ -122,6 +123,16 @@ const AdminPage = () => {
                     }`}
                 >
                     🛒 Quản lý sản phẩm
+                </button>
+                <button
+                    onClick={() => setActiveTab('orders')}
+                    className={`px-6 py-2 rounded-lg ${
+                        activeTab === 'orders' 
+                            ? 'bg-blue-600 text-white' 
+                            : 'bg-gray-200 hover:bg-gray-300'
+                    }`}
+                >
+                    📦 Quản lý đơn hàng
                 </button>
                 <button
                     onClick={() => setActiveTab('support')}
@@ -251,6 +262,8 @@ const AdminPage = () => {
                         ))}
                     </div>
                 </>
+            ) : activeTab === 'orders' ? (
+                <OrderManagement />
             ) : (
                 <SupportManagement />
             )}
@@ -259,6 +272,7 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+
 
 
 

@@ -24,3 +24,31 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
         res.status(500).json({ error: "Lỗi server" });
     }
 };
+
+export const getAllOrders = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const [orders] = await pool.execute('SELECT * FROM orders ORDER BY created_at DESC');
+        res.json(orders);
+    } catch (error) {
+        console.error('Lỗi khi lấy danh sách đơn hàng:', error);
+        res.status(500).json({ error: 'Lỗi server' });
+    }
+};
+
+export const updateOrderStatus = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        
+        await pool.execute(
+            'UPDATE orders SET status = ? WHERE id = ?',
+            [status, id]
+        );
+        
+        res.json({ message: 'Cập nhật trạng thái thành công' });
+    } catch (error) {
+        console.error('Lỗi khi cập nhật trạng thái đơn hàng:', error);
+        res.status(500).json({ error: 'Lỗi server' });
+    }
+};
+
