@@ -55,7 +55,11 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin" element={
+            <PrivateRoute adminRequired={true}>
+                <AdminPage />
+            </PrivateRoute>
+        } />
         <Route path="/" element={<CartPage />} />
         <Route path="/cartpay" element={<CartPayPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
@@ -76,3 +80,4 @@ function App() {
 }
 
 export default App;
+

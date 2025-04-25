@@ -8,7 +8,7 @@ import chatbot from './routes/chatbot';
 import orderRoutes from "./routes/order.routes";
 import supportRouter from "./routes/support";
 /*------------------------------------
-Cấu hình môi trường
+Dotnev
 --------------------------------------*/
 dotenv.config();
 
@@ -30,7 +30,7 @@ app.use('/api/chatbot', chatbot);
 app.use('/api/orders', orderRoutes);
 app.use("/api/support", supportRouter);
 /*------------------------------------
-Khởi động server
+Start Servers
 --------------------------------------*/
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);

@@ -18,7 +18,12 @@ export default function Login() {
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
 
-            navigate('/home');
+            // Kiểm tra role và chuyển hướng
+            if (user.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/home');
+            }
         } catch (error) {
             console.log('Lỗi chi tiết:', error.response?.data || error.message);
             alert(error.response?.data?.error || 'Đăng nhập thất bại');
@@ -88,7 +93,7 @@ export default function Login() {
                             <p className="text-sm text-slate-600">
                                 Chưa có tài khoản?{' '}
                                 <button
-                                    onClick={() => navigate('/singin')}
+                                    onClick={() => navigate('/signup')}
                                     className="text-blue-600 hover:underline focus:outline-none"
                                 >
                                     Đăng Kí Ngay
