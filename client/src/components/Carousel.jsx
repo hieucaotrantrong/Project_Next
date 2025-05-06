@@ -27,7 +27,6 @@ export default function Carousel() {
                     </ul>
 
                 </div>
-
                 {/*----------------------------------- 
                 Slider bar
                 --------------------------------------*/}
@@ -35,19 +34,17 @@ export default function Carousel() {
                     <TECarousel ride="carousel" showIndicators showControls>
                         <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
                             <TECarouselItem itemID={1} className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none">
-                                <img src="https://intphcm.com/data/upload/banner-thoi-trang-nam.jpg" className="w-full max-h-64 object-contain" alt="Slide 1" />
+                                <img src="https://img.freepik.com/premium-vector/beautiful-merry-christmas-snowflake-banner-template_1035-15756.jpg" className="w-full max-h-64 object-contain" alt="Slide 1" />
                             </TECarouselItem>
                             <TECarouselItem itemID={2} className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none">
-                                <img src="https://cf.shopee.vn/file/sg-11134258-7reoe-m8ec86jav73658_xxhdpi" className="w-full max-h-64 object-contain" alt="Slide 2" />
+                                <img src="https://img.freepik.com/premium-vector/beautiful-merry-christmas-snowflake-banner-template_1035-15756.jpg" className="w-full max-h-64 object-contain" alt="Slide 2" />
                             </TECarouselItem>
                             <TECarouselItem itemID={3} className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none">
-                                <img src="https://cf.shopee.vn/file/sg-11134258-7reo9-m8d6h84f36onbe_xxhdpi" className="w-full max-h-64 object-contain" alt="Slide 3" />
+                                <img src="https://lh5.googleusercontent.com/EV0mJCsYUlXoBxuF5q2BRi6_tAfhwd5pkC-WXBczb8KHJPWYO2uZbYLZX-wCb1x0SGQFeIRRD7msEDMZNbu3xeHPEBqiho1-56qAeJ_iUBmaG9nc8p-53hio_MQRk_K-zaJ1gjvt88tqbQ7_LveP1q5NfJc715hJKnWYhhxmGR24lZ9EXAhnQCvx8_qH" className="w-full max-h-64 object-contain" alt="Slide 3" />
                             </TECarouselItem>
                         </div>
                     </TECarousel>
                 </div>
-
-
                 <div className="w-1/4 text-right">
                     <div className="flex justify-end items-start gap-3 mb-2">
                         <div>
@@ -56,16 +53,14 @@ export default function Carousel() {
                         </div>
                         <Shirt className="text-green-600" />
                     </div>
-
                     <ul className="flex flex-col gap-2 mt-2">
-                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Flash Sale</li>
-                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Freeship</li>
-                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Đổi trả 7 ngày</li>
-                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Flash Sale</li>
-                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Freeship</li>
-                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Đổi trả 7 ngày</li>
+                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Hàng chính hãng</li>
+                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Nhập khẩu</li>
+                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Thời Trang Mới</li>
+                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Phong cách</li>
+                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Đặt ngay</li>
+                        <li className="px-3 py-1 bg-gray-100 rounded-full text-sm">Hoàn tiền 100%</li>
                     </ul>
-
                 </div>
             </div>
         </div>

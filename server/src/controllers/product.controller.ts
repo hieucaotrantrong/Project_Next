@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import pool from '../config/database';
 
 /*----------------------------------
+Get all product
 -----------------------------------*/
 export const getAllProducts = async (req: Request, res: Response) => {
     try {
@@ -13,6 +14,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
 };
 
 /*----------------------------------
+Get all product by id
 -----------------------------------*/
 export const getProductById = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -29,26 +31,6 @@ export const getProductById = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Lỗi khi lấy sản phẩm' });
     }
 };
-
-/*----------------------------------
------------------------------------*/
-/*
-export const getProductByName = async (req: Request, res: Response): Promise<Response> => {
-    const { name } = req.params;
-
-    try {
-        const [rows] = await pool.query('SELECT * FROM products WHERE name LIKE ?', [`%${name}%`]);
-
-        if ((rows as any[]).length === 0) {
-            return res.status(404).json({ error: 'Sản phẩm không tồn tại' });
-        }
-
-        return res.json((rows as any)[0]);
-    } catch (err) {
-        return res.status(500).json({ error: 'Lỗi máy chủ' });
-    }
-};
-*/
 /*----------------------------------
 Create Product
 -----------------------------------*/
@@ -77,6 +59,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
 
 /*----------------------------------
+Update prodcut
 -----------------------------------*/
 export const updateProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -100,6 +83,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 
 /*----------------------------------
+Delete product
 -----------------------------------*/
 export const deleteProduct = async (req: Request, res: Response) => {
     const { id } = req.params;

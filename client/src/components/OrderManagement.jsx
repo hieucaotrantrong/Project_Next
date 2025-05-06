@@ -4,11 +4,14 @@ import axios from 'axios';
 const OrderManagement = () => {
     const [orders, setOrders] = useState([]);
     const [error, setError] = useState(null);
-
+    /*----------------------------------
+    -----------------------------------*/
     useEffect(() => {
         fetchOrders();
     }, []);
-
+    /*----------------------------------
+    Get all product
+    -----------------------------------*/
     const fetchOrders = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -24,7 +27,9 @@ const OrderManagement = () => {
             setError('Không thể tải danh sách đơn hàng');
         }
     };
-
+    /*----------------------------------
+    Update status product
+    -----------------------------------*/
     const handleUpdateStatus = async (orderId, newStatus) => {
         try {
             const token = localStorage.getItem('token');

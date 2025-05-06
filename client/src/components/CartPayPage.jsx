@@ -7,7 +7,7 @@ const CartPayPage = () => {
     const product = location.state;
 
     const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState(""); // Thêm state cho email
+    const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +36,7 @@ const CartPayPage = () => {
         try {
             const res = await axios.post("http://localhost:5000/api/orders", {
                 fullName,
-                email, // Thêm email vào request
+                email,
                 phone,
                 address,
                 productId: product.id,
@@ -64,7 +64,7 @@ const CartPayPage = () => {
             <h1 className="text-3xl font-bold mb-6 text-center"> Thanh Toán Đơn Hàng</h1>
 
             <div className="flex gap-12">
-                {/* Phần hình ảnh sản phẩm */}
+                {/* product picture*/}
                 <div className="w-1/3">
                     <img
                         src={product.image}

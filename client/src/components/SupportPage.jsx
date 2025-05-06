@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { IoMdClose } from "react-icons/io";
 
 export default function SupportPage() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -19,7 +22,7 @@ export default function SupportPage() {
         e.preventDefault();
         setSuccess(false);
         setError("");
-        console.log("📨 Gửi yêu cầu:", formData);
+        console.log(" Gửi yêu cầu:", formData);
 
         try {
             const res = await fetch("http://localhost:5000/api/support", {
@@ -29,7 +32,7 @@ export default function SupportPage() {
             });
 
             const result = await res.json();
-            console.log("📦 Phản hồi từ server:", result);
+            console.log(" Phản hồi từ server:", result);
 
             if (res.ok) {
                 setSuccess(true);
@@ -44,7 +47,14 @@ export default function SupportPage() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-md rounded-xl">
+        <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-md rounded-xl relative">
+            <button
+                onClick={() => navigate('/')}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
+            >
+                <IoMdClose className="text-2xl" />
+            </button>
+
             <h2 className="text-2xl font-bold mb-4">Liên hệ hỗ trợ</h2>
             <p className="mb-6 text-gray-600">
                 Bạn gặp vấn đề? Hãy gửi thông tin cho chúng tôi để được hỗ trợ nhanh nhất.
@@ -109,3 +119,4 @@ export default function SupportPage() {
         </div>
     );
 }
+

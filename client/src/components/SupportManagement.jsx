@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+/*----------------------------------
+-----------------------------------*/
 const SupportManagement = () => {
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [reply, setReply] = useState('');
-
+    /*----------------------------------
+     -----------------------------------*/
     const fetchRequests = async () => {
         try {
             const token = localStorage.getItem('token');
-            console.log('Token:', token); // Kiểm tra token
+            console.log('Token:', token);
 
             const response = await axios.get('http://localhost:5000/api/support', {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            console.log('Response data:', response.data); // Kiểm tra dữ liệu nhận được
+            console.log('Response data:', response.data);
             setRequests(response.data);
             setLoading(false);
         } catch (err) {
-            console.error('Error details:', err); // Xem chi tiết lỗi
+            console.error('Error details:', err);
             setError('Không thể tải danh sách yêu cầu hỗ trợ');
             setLoading(false);
         }
     };
-
+    /*----------------------------------
+    -----------------------------------*/
     useEffect(() => {
         fetchRequests();
     }, []);
@@ -33,8 +36,8 @@ const SupportManagement = () => {
     const handleReply = async (requestId) => {
         try {
             const token = localStorage.getItem('token');
-            
-            // Log để debug
+
+
             console.log('Sending reply:', {
                 requestId,
                 reply,
@@ -44,17 +47,17 @@ const SupportManagement = () => {
             await axios.post(
                 `http://localhost:5000/api/support/${requestId}/reply`,
                 { reply },
-                { 
-                    headers: { 
+                {
+                    headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
-                    } 
+                    }
                 }
             );
 
             setReply('');
             setSelectedRequest(null);
-            fetchRequests(); // Refresh danh sách
+            fetchRequests();
             alert('Phản hồi đã được gửi thành công!');
         } catch (err) {
             console.error('Error sending reply:', err);

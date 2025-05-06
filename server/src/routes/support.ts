@@ -5,7 +5,8 @@ import { RowDataPacket, OkPacket } from 'mysql2';
 
 const router = Router();
 
-// Interface cho support request
+/*----------------------------------
+-----------------------------------*/
 interface SupportRequest extends RowDataPacket {
     id: number;
     name: string;
@@ -18,12 +19,15 @@ interface SupportRequest extends RowDataPacket {
     replied_at?: Date;
 }
 
-// Định nghĩa interface cho request handlers
+/*----------------------------------
+-----------------------------------*/
 interface TypedRequestHandler {
     (req: Request, res: Response, next: NextFunction): Promise<void>;
 }
 
-// Lấy tất cả yêu cầu hỗ trợ (cho admin)
+/*----------------------------------
+Get all request support
+-----------------------------------*/
 const getAllRequests: TypedRequestHandler = async (_req, res) => {
     try {
         const [requests] = await pool.execute<SupportRequest[]>(
@@ -35,19 +39,22 @@ const getAllRequests: TypedRequestHandler = async (_req, res) => {
         res.status(500).json({ error: 'Lỗi server' });
     }
 };
-
-// Gửi phản hồi cho yêu cầu hỗ trợ
+/*----------------------------------
+Support response function requested 1
+-----------------------------------*/
 const replyToRequest: TypedRequestHandler = async (req, res) => {
     try {
         const { id } = req.params;
         const { reply } = req.body;
 
-        // Lấy thông tin request
+        /*----------------------------------
+        Connetdb getall support
+        -----------------------------------*/
         const [requests] = await pool.execute<SupportRequest[]>(
             'SELECT email, topic FROM support_requests WHERE id = ?',
             [id]
         );
-        
+
         if (requests.length === 0) {
             res.status(404).json({ error: 'Không tìm thấy yêu cầu hỗ trợ' });
             return;
@@ -55,13 +62,15 @@ const replyToRequest: TypedRequestHandler = async (req, res) => {
 
         const request = requests[0];
 
-        // Cập nhật trạng thái support request
+        /*----------------------------------
+         -----------------------------------*/
         await pool.execute(
             'UPDATE support_requests SET reply = ?, status = "replied", replied_at = NOW() WHERE id = ?',
             [reply, id]
         );
 
-        // Tạo thông báo mới
+        /*----------------------------------
+       -----------------------------------*/
         console.log('Creating notification for:', {
             email: request.email,
             topic: request.topic,
@@ -84,7 +93,9 @@ const replyToRequest: TypedRequestHandler = async (req, res) => {
     }
 };
 
-// Tạo yêu cầu hỗ trợ mới
+/*----------------------------------
+Create request support handler
+-----------------------------------*/
 const createRequest: TypedRequestHandler = async (req, res) => {
     try {
         const { name, email, topic, message } = req.body;
@@ -106,7 +117,8 @@ const createRequest: TypedRequestHandler = async (req, res) => {
     }
 };
 
-// Đăng ký routes
+/*----------------------------------
+-----------------------------------*/
 router.get('/', adminAuth, getAllRequests);
 router.post('/:id/reply', adminAuth, replyToRequest);
 router.post('/', createRequest);

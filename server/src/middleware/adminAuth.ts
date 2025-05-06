@@ -1,14 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-// Định nghĩa interface cho decoded token
+/*----------------------------------
+-----------------------------------*/
 interface DecodedToken {
     userId: number;
     role?: string;
-    // Thêm các trường khác nếu cần
+    /*----------------------------------
+    -----------------------------------*/
 }
 
-// Mở rộng interface Request của Express
+/*----------------------------------
+-----------------------------------*/
 declare global {
     namespace Express {
         interface Request {
@@ -31,8 +34,10 @@ export const adminAuth = async (
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as DecodedToken;
-        
-        // Kiểm tra role admin
+
+        /*----------------------------------
+        Check role admin
+        -----------------------------------*/
         if (!decoded.userId) {
             res.status(403).json({ error: 'Token không hợp lệ' });
             return;

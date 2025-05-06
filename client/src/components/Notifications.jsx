@@ -9,10 +9,10 @@ const Notifications = () => {
 
     const fetchNotifications = async () => {
         try {
-            const userEmail = localStorage.getItem('userEmail'); // Lưu email user khi đăng nhập
+            const userEmail = localStorage.getItem('userEmail');
             const response = await axios.get(`http://localhost:5000/api/notifications/${userEmail}`);
             setNotifications(response.data);
-            setUnread(response.data.filter(notif => !notif.is_read).length);  // Sửa read thành is_read
+            setUnread(response.data.filter(notif => !notif.is_read).length);
         } catch (error) {
             console.error('Lỗi khi tải thông báo:', error);
         }
@@ -20,7 +20,7 @@ const Notifications = () => {
 
     useEffect(() => {
         fetchNotifications();
-        // Cập nhật thông báo mỗi 30 giây
+
         const interval = setInterval(fetchNotifications, 30000);
         return () => clearInterval(interval);
     }, []);
@@ -64,9 +64,8 @@ const Notifications = () => {
                             notifications.map((notification) => (
                                 <div
                                     key={notification.id}
-                                    className={`p-4 hover:bg-gray-50 cursor-pointer ${
-                                        !notification.is_read ? 'bg-blue-50' : ''  // Sửa read thành is_read
-                                    }`}
+                                    className={`p-4 hover:bg-gray-50 cursor-pointer ${!notification.is_read ? 'bg-blue-50' : ''  // Sửa read thành is_read
+                                        }`}
                                     onClick={() => handleMarkAsRead(notification.id)}
                                 >
                                     <div className="text-sm font-medium text-gray-900">

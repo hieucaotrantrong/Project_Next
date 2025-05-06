@@ -1,5 +1,6 @@
 import React from 'react';
-
+/*----------------------------------
+-----------------------------------*/
 export default function Footers() {
     return (
         <footer className="bg-white">
@@ -17,11 +18,11 @@ export default function Footers() {
                     <div className="mt-8 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
                         <div className="col-span-2">
                             <div>
-                                <h2 className="text-2xl font-bold text-gray-900">Get the latest news!</h2>
+                                <h2 className="text-2xl font-bold text-gray-900">Monday Group</h2>
 
                                 <p className="mt-4 text-gray-500">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non cupiditate quae nam
-                                    molestias.
+                                    Cam kết sản phẩm đạt chất lượng vượt trội so với thị trường
+                                    nếu hàng giả thì chúng tôi sẽ hoàn tiền 100%
                                 </p>
                             </div>
                         </div>
@@ -36,7 +37,7 @@ export default function Footers() {
                                     <input
                                         type="email"
                                         id="UserEmail"
-                                        placeholder="john@rhcp.com"
+                                        placeholder="Hieusenior@gmail.com"
                                         className="w-full border-none focus:border-transparent focus:ring-transparent sm:text-sm"
                                     />
                                 </div>

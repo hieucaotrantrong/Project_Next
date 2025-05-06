@@ -3,7 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SupportManagement from '../components/SupportManagement';
 import OrderManagement from '../components/OrderManagement';
+/*------------------------------------------
 
+-------------------------------------------*/
 const AdminPage = () => {
     const [activeTab, setActiveTab] = useState('products');
     const [products, setProducts] = useState([]);
@@ -18,6 +20,9 @@ const AdminPage = () => {
     const [editingProduct, setEditingProduct] = useState(null);
     const [preview, setPreview] = useState('');
     const navigate = useNavigate();
+    /*------------------------------------------
+    Logout
+    -------------------------------------------*/
 
     const handleLogout = () => {
         const confirmLogout = window.confirm('Bạn có chắc chắn muốn đăng xuất không?');
@@ -27,7 +32,9 @@ const AdminPage = () => {
             navigate('/');
         }
     };
-
+    /*------------------------------------------
+      Get all product
+      -------------------------------------------*/
     const fetchProducts = async () => {
         try {
             const res = await axios.get('http://localhost:5000/api/products');
@@ -40,8 +47,9 @@ const AdminPage = () => {
     useEffect(() => {
         fetchProducts();
     }, []);
-
-    // Giữ nguyên các hàm xử lý sản phẩm
+    /*---------------------------------------
+    Add product anh update product
+    -----------------------------------------*/
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -65,7 +73,9 @@ const AdminPage = () => {
             console.error('Lỗi khi thêm/sửa sản phẩm:', error);
         }
     };
-
+    /*----------------------------------
+    Delete product
+    -----------------------------------*/
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:5000/api/products/${id}`);
@@ -74,7 +84,9 @@ const AdminPage = () => {
             console.error('Lỗi khi xoá sản phẩm:', error);
         }
     };
-
+    /*------------------------------------------
+      Update product
+      -------------------------------------------*/
     const handleEdit = (product) => {
         setEditingProduct(product);
         setForm({
@@ -87,10 +99,12 @@ const AdminPage = () => {
         });
         setPreview(product.image);
     };
-
+    /*------------------------------------------
+      
+    -------------------------------------------*/
     return (
         <div className="max-w-6xl mx-auto p-6">
-            {/* Thêm nút đăng xuất ở đầu trang */}
+            {/*Logout */}
             <div className="flex justify-end mb-4">
                 <button
                     onClick={handleLogout}
@@ -117,36 +131,36 @@ const AdminPage = () => {
                 <button
                     onClick={() => setActiveTab('products')}
                     className={`px-6 py-2 rounded-lg ${activeTab === 'products'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-200 hover:bg-gray-300'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-200 hover:bg-gray-300'
                         }`}
                 >
-                    🛒 Quản lý sản phẩm
+                    Quản lý sản phẩm
                 </button>
                 <button
                     onClick={() => setActiveTab('orders')}
                     className={`px-6 py-2 rounded-lg ${activeTab === 'orders'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-200 hover:bg-gray-300'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-200 hover:bg-gray-300'
                         }`}
                 >
-                    📦 Quản lý đơn hàng
+                    Quản lý đơn hàng
                 </button>
                 <button
                     onClick={() => setActiveTab('support')}
                     className={`px-6 py-2 rounded-lg ${activeTab === 'support'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-200 hover:bg-gray-300'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-200 hover:bg-gray-300'
                         }`}
                 >
-                    📬 Quản lý hỗ trợ
+                    Quản lý hỗ trợ
                 </button>
             </div>
 
             {/* Content */}
             {activeTab === 'products' ? (
                 <>
-                    <h1 className="text-3xl font-bold mb-6 text-center">🛒 Quản lý sản phẩm</h1>
+                    <h1 className="text-3xl font-bold mb-6 text-center"> Quản lý sản phẩm</h1>
 
                     {/* Form */}
                     <form
@@ -219,12 +233,12 @@ const AdminPage = () => {
                             type="submit"
                             className="col-span-1 md:col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
                         >
-                            {editingProduct ? '✅ Cập nhật sản phẩm' : '➕ Thêm sản phẩm'}
+                            {editingProduct ? ' Cập nhật sản phẩm' : '➕ Thêm sản phẩm'}
                         </button>
                     </form>
 
                     {/* Danh sách sản phẩm */}
-                    <h2 className="text-2xl font-semibold mb-4">📦 Danh sách sản phẩm</h2>
+                    <h2 className="text-2xl font-semibold mb-4"> Danh sách sản phẩm</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                         {products.map((item) => (
                             <div

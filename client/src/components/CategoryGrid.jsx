@@ -1,15 +1,15 @@
 export default function CategoryGrid() {
     const categories = [
-        { name: 'Thời Trang Nam', img: 'https://down-vn.img.susercontent.com/file/360b4be695501be29659f3cdc35d63da' },
-        { name: 'Áo LV', img: 'https://down-vn.img.susercontent.com/file/ca0429429ff9ae1fc6fd779e81f4e82a' },
-        { name: 'Quần Boy Phố', img: 'https://down-vn.img.susercontent.com/file/ca0429429ff9ae1fc6fd779e81f4e82a' },
-        { name: 'Váy Nữ', img: 'https://down-vn.img.susercontent.com/file/ca0429429ff9ae1fc6fd779e81f4e82a' },
-        { name: 'Quần Zin', img: 'https://down-vn.img.susercontent.com/file/ca0429429ff9ae1fc6fd779e81f4e82a' },
-        { name: 'Áo Hoodie', img: 'https://down-vn.img.susercontent.com/file/ca0429429ff9ae1fc6fd779e81f4e82a' },
-        { name: 'Giày Dép Nam', img: 'https://down-vn.img.susercontent.com/file/ca0429429ff9ae1fc6fd779e81f4e82a' },
-        { name: 'Áo thun', img: 'https://down-vn.img.susercontent.com/file/ca0429429ff9ae1fc6fd779e81f4e82a' },
-        { name: 'Áo Sơ Mi', img: 'https://down-vn.img.susercontent.com/file/ca0429429ff9ae1fc6fd779e81f4e82a' },
-        { name: 'Quần Đùi', img: 'https://down-vn.img.susercontent.com/file/ca0429429ff9ae1fc6fd779e81f4e82a' },
+        { name: 'Áo sơ mi nữ', img: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/403/511/products/o1cn01n4hg1w2ip1dgkwt3v1722759.jpg' },
+        { name: 'Áo LV', img: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_M/louis-vuitton--HQN63WAUR650_PM2_Front%20view.jpg?wid=750&hei=870' },
+        { name: 'Quần Jean', img: 'https://bizweb.dktcdn.net/100/502/737/products/o1cn01yuiewj2lm7iae8nvx2105279-7c9920f1-f0ea-4d64-863f-ced24db29558.jpg?v=1737172591900' },
+        { name: 'Váy Nữ', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_UaFZ0wuZOWqs3ZbgXNKK_qai-fuJd9FgEA&s' },
+        { name: 'Quần Cọc', img: 'https://down-vn.img.susercontent.com/file/vn-11134208-7r98o-m072ma3qewh9eb' },
+        { name: 'Áo Hoodie', img: 'https://bizweb.dktcdn.net/100/461/076/products/ebffa6912e179449cd069-1733823684883.jpg?v=1733825573297' },
+        { name: 'Giày Nam', img: 'https://yeepvn.sgp1.digitaloceanspaces.com/2023/03/vn-11134201-23020-v8bfhbczmynv5c.jpg' },
+        { name: 'Áo thun', img: 'https://thoitrangbigsize.vn/wp-content/uploads/2024/12/BSX1479N.jpg' },
+        { name: 'Áo Sơ Mi', img: 'https://product.hstatic.net/200000690725/product/52676411040_14a9edf7fb_k_274a9ee91f644bb497574ddf187a898a_master.jpg' },
+        { name: 'Váy Công Chúa', img: 'https://bizweb.dktcdn.net/100/502/737/products/o1cn011zqrhm28vcvdncmmx1611117.jpg?v=1725004567197' },
     ];
 
     return (
@@ -28,8 +28,8 @@ export default function CategoryGrid() {
                     </div>
                 ))}
             </div>
-            
+
         </div>
-        
+
     );
 }
