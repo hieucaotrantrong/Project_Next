@@ -30,7 +30,7 @@ async function chatHandler(req: ChatRequest, res: Response): Promise<void> {
             Handle keywords
             -----------------------------------*/
             const keywords = prompt.toLowerCase()
-                .replace(/có|không|ko|những|các|sản phẩm|hay|là/g, '')
+                .replace(/có|không|cái|ko|những|các|sản phẩm|hay|là/g, '')
                 .trim()
                 .split(' ')
                 .filter(word => word.length > 1);
