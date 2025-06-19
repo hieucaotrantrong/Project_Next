@@ -14,7 +14,7 @@ export default function CategoryGrid() {
 
     return (
         <div className="bg-white p-4 rounded-md shadow border border-gray-200">
-            <h2 className="text-lg font-semibold mb-4">DANH MỤC</h2>
+            <h2 className="text-lg font-semibold mb-4">Khuyến mãi Online</h2>
             <div className="grid grid-cols-5 gap-4">
                 {categories.map((cat, index) => (
                     <div
