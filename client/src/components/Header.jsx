@@ -7,29 +7,20 @@ import {
     FaUser,
     FaShoppingCart,
     FaMapMarkerAlt,
-    FaMobileAlt,
-    FaLaptop,
-    FaHeadphones,
-    FaClock,
-    FaTabletAlt,
-    FaRedo,
-    FaTv,
-    FaSimCard,
-    FaTools,
     FaSearch,
 } from "react-icons/fa";
 
 const menuItems = [
-    { icon: <FaMobileAlt />, label: "Điện thoại" },
-    { icon: <FaLaptop />, label: "Laptop" },
-    { icon: <FaHeadphones />, label: "Phụ kiện" },
-    { icon: <FaClock />, label: "Smartwatch" },
-    { icon: <FaClock />, label: "Đồng hồ" },
-    { icon: <FaTabletAlt />, label: "Tablet" },
-    { icon: <FaRedo />, label: "Máy cũ, Thu cũ" },
-    { icon: <FaTv />, label: "Màn hình, Máy in" },
-    { icon: <FaSimCard />, label: "Sim, Thẻ cào" },
-    { icon: <FaTools />, label: "Dịch vụ tiện ích" },
+    { icon: <img src="https://cdn.tgdd.vn/content/phonne-24x24.png" className="w-5 h-5" />, label: "Điện thoại" },
+    { icon: <img src="https://cdn.tgdd.vn/content/laptop-24x24.png" className="w-5 h-5" />, label: "Laptop" },
+    { icon: <img src="https://cdn.tgdd.vn/content/phu-kien-24x24.png" className="w-5 h-5" />, label: "Phụ kiện" },
+    { icon: <img src="https://cdn.tgdd.vn/content/smartwatch-24x24.png" className="w-5 h-5" />, label: "Smartwatch" },
+    { icon: <img src="https://cdn.tgdd.vn/content/watch-24x24.png" className="w-5 h-5" />, label: "Đồng Hồ" },
+    { icon: <img src="https://cdn.tgdd.vn/content/tablet-24x24.png" className="w-5 h-5" />, label: "Tablet" },
+    { icon: <img src="https://cdn.tgdd.vn/content/may-cu-24x24.png" className="w-5 h-5" />, label: "Mua máy thu cũ" },
+    { icon: <img src="https://cdn.tgdd.vn/content/PC-24x24.png" className="w-5 h-5" />, label: "Màn hình, Máy in" },
+    { icon: <img src="https://cdn.tgdd.vn/content/sim-24x24.png" className="w-5 h-5" />, label: "Sim, Thẻ cào" },
+    { icon: <img src="https://cdn.tgdd.vn/content/tien-ich-24x24.png" className="w-5 h-5" />, label: "Dịch vụ tiện ích" },
 ];
 
 export default function Header() {
@@ -77,7 +68,7 @@ export default function Header() {
             </div>
 
             {/* Bottom Menu */}
-            <div className="w-full max-w-[1280px] mx-auto flex flex-wrap gap-9 px-4 py-2 text-sm font-normal">
+            <div className="w-full max-w-[1280px] mx-auto flex flex-wrap gap-7 px-4 py-3 text-sm font-normal">
                 {menuItems.map((item, index) => (
                     <div key={index} className="flex items-center gap-1 cursor-pointer hover:underline">
                         {item.icon}

@@ -1,35 +1,104 @@
 export default function CategoryGrid() {
     const categories = [
-        { name: 'Áo sơ mi nữ', img: 'https://bizweb.dktcdn.net/thumb/1024x1024/100/403/511/products/o1cn01n4hg1w2ip1dgkwt3v1722759.jpg' },
-        { name: 'Áo LV', img: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_M/louis-vuitton--HQN63WAUR650_PM2_Front%20view.jpg?wid=750&hei=870' },
-        { name: 'Quần Jean', img: 'https://bizweb.dktcdn.net/100/502/737/products/o1cn01yuiewj2lm7iae8nvx2105279-7c9920f1-f0ea-4d64-863f-ced24db29558.jpg?v=1737172591900' },
-        { name: 'Váy Nữ', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_UaFZ0wuZOWqs3ZbgXNKK_qai-fuJd9FgEA&s' },
-        { name: 'Quần Cọc', img: 'https://down-vn.img.susercontent.com/file/vn-11134208-7r98o-m072ma3qewh9eb' },
-        { name: 'Áo Hoodie', img: 'https://bizweb.dktcdn.net/100/461/076/products/ebffa6912e179449cd069-1733823684883.jpg?v=1733825573297' },
-        { name: 'Giày Nam', img: 'https://yeepvn.sgp1.digitaloceanspaces.com/2023/03/vn-11134201-23020-v8bfhbczmynv5c.jpg' },
-        { name: 'Áo thun', img: 'https://thoitrangbigsize.vn/wp-content/uploads/2024/12/BSX1479N.jpg' },
-        { name: 'Áo Sơ Mi', img: 'https://product.hstatic.net/200000690725/product/52676411040_14a9edf7fb_k_274a9ee91f644bb497574ddf187a898a_master.jpg' },
-        { name: 'Váy Công Chúa', img: 'https://bizweb.dktcdn.net/100/502/737/products/o1cn011zqrhm28vcvdncmmx1611117.jpg?v=1725004567197' },
+        { name: 'Samsung Galaxy S25', price: '27.690.000₫', originalPrice: '29.990.000₫', discount: '7%', img: 'https://cdn.tgdd.vn/Products/Images/42/335925/samsung-galaxy-s25-edge-blue-thumb-600x600.jpg', specs: 'Quad HD+ (2K+)', screenSize: '6.7"', sold: '62', rating: 5 },
+        { name: 'Xiaomi Redmi 13x', price: '4.290.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/42/332938/xiaomi-redmi-note-14-pro-thumbnew-600x600.jpg', specs: 'Full HD+', screenSize: '6.79"', sold: '31.3k', rating: 4.9 },
+        { name: 'OPPO Reno13 F 5G', price: '9.990.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/42/329149/iphone-16-pro-max-sa-mac-thumb-1-600x600.jpg', specs: 'Full HD+', screenSize: '6.67"', sold: '97.7k', rating: 4.9 },
+        { name: 'vivo V50 Lite', price: '8.990.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/42/329143/iphone-16-pro-titan-trang.png', specs: 'Full HD+', screenSize: '6.77"', sold: '5k', rating: 4.9 },
+        { name: 'realme C71', price: '3.990.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/42/335955/samsung-galaxy-s25-edge-sliver-thumb-600x600.jpg', specs: 'HD+', screenSize: '6.72"', sold: '2k', rating: 5 },
+
+    ];
+
+    const tabs = [
+        { name: 'Điện Thoại', active: true },
+        { name: 'Apple', active: false },
+        { name: 'Laptop', active: false },
+        { name: 'Phụ Kiện', active: false },
+        { name: 'Đồng Hồ', active: false },
+        { name: 'PC, Máy In', active: false },
     ];
 
     return (
-        <div className="bg-white p-4 rounded-md shadow border border-gray-200">
-            <h2 className="text-lg font-semibold mb-4">Khuyến mãi Online</h2>
-            <div className="grid grid-cols-5 gap-4">
-                {categories.map((cat, index) => (
-                    <div
-                        key={index}
-                        className="flex flex-col items-center text-center border border-gray-200 p-4 rounded-md hover:scale-105 transition-transform cursor-pointer"
-                    >
-                        <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
-                            <img src={cat.img} alt={cat.name} className="w-10 h-10 object-contain" />
+        <div className="w-full bg-white mt-4">
+            {/* Product Grid */}
+            <div className="max-w-7xl mx-auto px-4 py-3">
+                <div className="flex justify-between items-center mb-3">
+                    <h2 className="text-lg font-bold text-black-800">Khuyến mãi Online</h2>
+                </div>
+
+                {/* Flash Sale Banner and Tabs */}
+                <div className="mb-4">
+                    <div className="flex items-center">
+                        <div className="flex items-center gap-3 mr-8">
+                            <img src="https://cdnv2.tgdd.vn/mwg-static/common/Campaign/10/0d/100d3018ffd23afe20324b164d0412cc.png" alt="" className="h-12 object-contain" />
+                            <div className="bg-orange-10 text-white px-3 py-1 rounded-md font-bold">
+                                <img src="https://cdnv2.tgdd.vn/mwg-static/common/Campaign/d4/17/d4177404ab82e04867a0fd79bb903450.png" alt="" className="h-12 object-contain" />
+                            </div>
                         </div>
-                        <p className="text-sm mt-2">{cat.name}</p>
+
+                        <div className="flex gap-x-20">
+                            {tabs.map((tab, index) => (
+                                <button
+                                    key={index}
+                                    className={`px-4 py-2  text-sm font-medium ${tab.active
+                                        ? 'text-blue-600 border-b-2 border-blue-600'
+                                        : 'text-gray-500 hover:text-gray-700'
+                                        }`}
+                                >
+                                    {tab.name}
+                                </button>
+                            ))}
+                        </div>
                     </div>
-                ))}
+                </div>
+
+                {/* Banner */}
+                <div className="max-w-7xl mx-auto px-2 py-2 mb-4">
+                    <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-pink-200 rounded-md p-3 flex items-center">
+                        <img src="https://cdnv2.tgdd.vn/mwg-static/common/Campaign/c8/b7/c8b756baf5f990d065abf3acd1de19f6.png" alt=""
+                            className="h-8 object-contain" />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-5 gap-4">
+                    {categories.map((product, index) => (
+                        <div key={index} className="bg-white rounded-md hover:shadow-md transition-shadow">
+                            <div className="p-2 flex flex-col ">
+                                <img
+                                    src={product.img}
+                                    alt={product.name}
+                                    className="w-full h-32 object-contain mb-2"
+                                />
+
+                                <h3 className="font-medium text-sm ">{product.name}</h3>
+                                <div className="text-xs text-gray-600 mt-1">
+                                    {product.specs} {product.screenSize}
+                                </div>
+
+                                <div className="text-red-600 font-bold mt-1">{product.price}</div>
+                                {product.originalPrice && (
+                                    <div className="text-gray-500 text-xs line-through">{product.originalPrice}</div>
+                                )}
+
+                                <div className="bg-white-100 text-xs p-1 rounded mt-2 w-full ">
+                                    Quà {index === 0 ? '3.000.000₫' : index === 1 ? '350.000₫' : index === 2 ? '600.000₫' : index === 3 ? '360.000₫' : index === 4 ? '250.000₫' : '1.500.000₫'}
+                                </div>
+
+                                <div className="flex items-center text-xs mt-2">
+                                    <span className="text-yellow-500 mr-1">★</span>
+                                    <span className="mr-1">{product.rating}</span>
+                                    <span className="text-gray-500">• Đã bán {product.sold}</span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-
         </div>
-
     );
 }
+
+
+
+
+
+
