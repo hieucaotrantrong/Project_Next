@@ -329,7 +329,7 @@ const FlashSaleSection = () => {
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="max-h-full object-contain transition-transform duration-300 ease-in-out hover:scale-105"
+                    className="max-h-full object-contain "
                   />
                   <div className="absolute top-1 right-1 bg-yellow-400 text-[10px] font-bold px-1 rounded">
                     {item.discount}

@@ -16,6 +16,7 @@ import ProductDetail from "./components/ProductDetail";
 import ChatBotIcon from "./components/ChatBotIcon";
 import CartPayPage from "./components/CartPayPage";
 import SupportPage from "./components/SupportPage";
+import SpecialProduct from "./components/SpecialProduct";
 /*----------------------------------
 Home Create
 -----------------------------------*/
@@ -27,6 +28,7 @@ function HomePage() {
       <CategoryGrid />
       <FlashSale />
       <MallSection />
+      <SpecialProduct />
       <Footers />
     </>
   );
