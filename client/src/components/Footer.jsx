@@ -66,43 +66,49 @@ const Footer = () => {
                 <ul className="grid grid-cols-4 gap-2 mt-2">
                   <li className="p-1 flex items-center justify-start h-[24px]">
                     <a rel="nofollow" href="https://www.topzone.vn/" target="_blank" title="Chuỗi cửa hàng cao cấp Apple">
-                      <img src="https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/logo_thodmx-dtv2.png" alt="logo topzone" 
+                      <img src="https://cdnv2.tgdd.vn/bhx/product-fe/cart/home/_next/public/static/images/logo_topzone.png" alt="logo topzone" 
                            className="h-[24px] w-[80px] object-contain rounded-md" />
                     </a>
                   </li>
                   <li className="p-1 flex items-center justify-start h-[24px]">
                     <a rel="nofollow" href="https://www.dienmayxanh.com/" target="_blank">
-                      <img src="https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/logo_thodmx-dtv2.png" alt="logo dienmayxanh" 
+                      <img src="https://cdnv2.tgdd.vn/bhx/product-fe/cart/home/_next/public/static/images/logo_dmx.png" alt="logo dienmayxanh" 
                            className="h-[24px] w-[80px] object-contain rounded-md" />
                     </a>
                   </li>
                   <li className="p-1 flex items-center justify-start h-[24px]">
                     <a rel="nofollow" href="https://www.dienmayxanh.com/" target="_blank">
-                      <img src="https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/logo_thodmx-dtv2.png" alt="logo dienmayxanh" 
+                      <img src="https://cdnv2.tgdd.vn/bhx/product-fe/cart/home/_next/public/static/images/logo_ava.png" alt="logo dienmayxanh" 
                            className="h-[24px] w-[80px] object-contain rounded-md" />
                     </a>
                   </li>
                   <li className="p-1 flex items-center justify-start h-[24px]">
                     <a rel="nofollow" href="https://www.dienmayxanh.com/" target="_blank">
-                      <img src="https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/logo_thodmx-dtv2.png" alt="logo dienmayxanh" 
+                      <img src="https://cdnv2.tgdd.vn/bhx/product-fe/cart/home/_next/public/static/images/logo_ak.png" alt="logo dienmayxanh" 
                            className="h-[24px] w-[80px] object-contain rounded-md" />
                     </a>
                   </li>
                   <li className="p-1 flex items-center justify-start h-[24px]">
                     <a rel="nofollow" href="https://www.dienmayxanh.com/" target="_blank">
-                      <img src="https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/logo_thodmx-dtv2.png" alt="logo dienmayxanh" 
+                      <img src="https://cdnv2.tgdd.vn/bhx/product-fe/cart/home/_next/public/static/images/logo_era.png" alt="logo dienmayxanh" 
                            className="h-[24px] w-[80px] object-contain rounded-md" />
                     </a>
                   </li>
                   <li className="p-1 flex items-center justify-start h-[24px]">
                     <a rel="nofollow" href="https://www.dienmayxanh.com/" target="_blank">
-                      <img src="https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/logo_thodmx-dtv2.png" alt="logo dienmayxanh" 
+                      <img src="https://cdnv2.tgdd.vn/bhx/product-fe/cart/home/_next/public/static/images/logo_tdmx.png" alt="logo dienmayxanh" 
                            className="h-[24px] w-[80px] object-contain rounded-md" />
                     </a>
                   </li>
                   <li className="p-1 flex items-center justify-start h-[24px]">
                     <a rel="nofollow" href="https://www.dienmayxanh.com/" target="_blank">
-                      <img src="https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/logo_thodmx-dtv2.png" alt="logo dienmayxanh" 
+                      <img src="https://cdnv2.tgdd.vn/bhx/product-fe/cart/home/_next/public/static/images/logo_mwg.png" alt="logo dienmayxanh" 
+                           className="h-[24px] w-[80px] object-contain rounded-md" />
+                    </a>
+                  </li>
+                  <li className="p-1 flex items-center justify-start h-[24px]">
+                    <a rel="nofollow" href="https://www.dienmayxanh.com/" target="_blank">
+                      <img src="https://cdnv2.tgdd.vn/bhx/product-fe/cart/home/_next/public/static/images/logo_tgdd.png" alt="logo dienmayxanh" 
                            className="h-[24px] w-[80px] object-contain rounded-md" />
                     </a>
                   </li>

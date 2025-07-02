@@ -1,0 +1,14 @@
+[class^="iconlogo-"] {
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 24px;
+  width: 84px;
+  line-height: 30px;
+  vertical-align: middle;
+  background-size: 500px 400px;
+  background-image: url('https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/DMX/Global/Desktop/Logo-webmoi-min.png');
+}
+
+.iconlogo-topzone {
+  background-position: 0 -58px;
+}
