@@ -16,6 +16,7 @@ import ProductDetail from "./components/ProductDetail";
 import ChatBotIcon from "./components/ChatBotIcon";
 import CartPayPage from "./components/CartPayPage";
 import SupportPage from "./components/SupportPage";
+import PromoBanner from './components/PromoBanner';
 /*----------------------------------
 Home Create
 -----------------------------------*/
@@ -25,6 +26,7 @@ function HomePage() {
       <Header />
       <Carousel />
       <CategoryGrid />
+      <PromoBanner />
       <FlashSale />
       <MallSection />
       <Footers />
@@ -56,9 +58,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/admin" element={
-            <PrivateRoute adminRequired={true}>
-                <AdminPage />
-            </PrivateRoute>
+          <PrivateRoute adminRequired={true}>
+            <AdminPage />
+          </PrivateRoute>
         } />
         <Route path="/" element={<CartPage />} />
         <Route path="/cartpay" element={<CartPayPage />} />
@@ -80,4 +82,5 @@ function App() {
 }
 
 export default App;
+
 

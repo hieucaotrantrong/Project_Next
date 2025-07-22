@@ -2,9 +2,9 @@ export default function CategoryGrid() {
     const categories = [
         { name: 'Samsung Galaxy S25', price: '27.690.000₫', originalPrice: '29.990.000₫', discount: '7%', img: 'https://cdn.tgdd.vn/Products/Images/42/335925/samsung-galaxy-s25-edge-blue-thumb-600x600.jpg', specs: 'Quad HD+ (2K+)', screenSize: '6.7"', sold: '62', rating: 5 },
         { name: 'Xiaomi Redmi 13x', price: '4.290.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/42/332938/xiaomi-redmi-note-14-pro-thumbnew-600x600.jpg', specs: 'Full HD+', screenSize: '6.79"', sold: '31.3k', rating: 4.9 },
-        { name: 'OPPO Reno13 F 5G', price: '9.990.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/42/329149/iphone-16-pro-max-sa-mac-thumb-1-600x600.jpg', specs: 'Full HD+', screenSize: '6.67"', sold: '97.7k', rating: 4.9 },
-        { name: 'vivo V50 Lite', price: '8.990.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/42/329143/iphone-16-pro-titan-trang.png', specs: 'Full HD+', screenSize: '6.77"', sold: '5k', rating: 4.9 },
-        { name: 'realme C71', price: '3.990.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/42/335955/samsung-galaxy-s25-edge-sliver-thumb-600x600.jpg', specs: 'HD+', screenSize: '6.72"', sold: '2k', rating: 5 },
+        { name: 'MacBook Air 13 inch M2 16GB/256GB', price: '9.990.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/44/325306/apple-macbook-air-m2-2022-xanh-den-600x600.jpg', specs: 'Full HD+', screenSize: '6.67"', sold: '97.7k', rating: 4.9 },
+        { name: 'MacBook Air 13 inch M1 8GB/256GB', price: '8.990.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/42/329143/iphone-16-pro-titan-trang.png', specs: 'Full HD+', screenSize: '6.77"', sold: '5k', rating: 4.9 },
+        { name: 'Samsung Galaxy A56 5G 12GB/256GB', price: '3.990.000₫', originalPrice: '', discount: '', img: 'https://cdn.tgdd.vn/Products/Images/42/334930/samsung-galaxy-a36-5g-green-thumb-600x600.jpg', specs: 'HD+', screenSize: '6.72"', sold: '2k', rating: 5 },
 
     ];
 
@@ -88,11 +88,15 @@ export default function CategoryGrid() {
                                     <span className="mr-1">{product.rating}</span>
                                     <span className="text-gray-500">• Đã bán {product.sold}</span>
                                 </div>
+
                             </div>
+
                         </div>
+
                     ))}
                 </div>
             </div>
+
         </div>
     );
 }
