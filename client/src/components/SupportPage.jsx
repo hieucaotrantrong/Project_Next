@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
+import Home from "./Home";
+import Footers from "./Footers";
+import Carousel from "./Carousel";
 
 export default function SupportPage() {
     const navigate = useNavigate();
@@ -47,76 +50,83 @@ export default function SupportPage() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-md rounded-xl relative">
-            <button
-                onClick={() => navigate('/')}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
-            >
-                <IoMdClose className="text-2xl" />
-            </button>
+        <div className="min-h-screen bg-gray-50">
+            {/* Header từ Home component */}
+            <Home />
+            <Carousel />
 
-            <h2 className="text-2xl font-bold mb-4">Liên hệ hỗ trợ</h2>
-            <p className="mb-6 text-gray-600">
-                Bạn gặp vấn đề? Hãy gửi thông tin cho chúng tôi để được hỗ trợ nhanh nhất.
-            </p>
+            {/* Support Content */}
+            <div className="max-w-2xl mx-auto pt-10 pb-10 px-6">
+                <div className="bg-white shadow-md rounded-xl p-6 relative">
+                    <h2 className="text-2xl font-bold mb-4">Liên hệ hỗ trợ</h2>
+                    <p className="mb-6 text-gray-600">
+                        Bạn gặp vấn đề? Hãy gửi thông tin cho chúng tôi để được hỗ trợ nhanh nhất.
+                    </p>
 
-            {success && (
-                <div className="mb-4 text-green-600 font-semibold">
-                    Gửi thành công! Chúng tôi sẽ phản hồi sớm nhất.
+                    {success && (
+                        <div className="mb-4 text-green-600 font-semibold">
+                            Gửi thành công! Chúng tôi sẽ phản hồi sớm nhất.
+                        </div>
+                    )}
+                    {error && (
+                        <div className="mb-4 text-red-600 font-semibold">
+                            {error}
+                        </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Họ và tên"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                            className="w-full border border-gray-300 p-2 rounded-md"
+                        />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            className="w-full border border-gray-300 p-2 rounded-md"
+                        />
+                        <select
+                            name="topic"
+                            value={formData.topic}
+                            onChange={handleChange}
+                            className="w-full border border-gray-300 p-2 rounded-md"
+                        >
+                            <option>Giao hàng</option>
+                            <option>Thanh toán</option>
+                            <option>Sản phẩm</option>
+                            <option>Khác</option>
+                        </select>
+                        <textarea
+                            name="message"
+                            placeholder="Mô tả vấn đề bạn gặp phải..."
+                            value={formData.message}
+                            onChange={handleChange}
+                            required
+                            className="w-full border border-gray-300 p-2 rounded-md h-32"
+                        />
+                        <button
+                            type="submit"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                        >
+                            Gửi hỗ trợ
+                        </button>
+                    </form>
                 </div>
-            )}
-            {error && (
-                <div className="mb-4 text-red-600 font-semibold">
-                    {error}
-                </div>
-            )}
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Họ và tên"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full border border-gray-300 p-2 rounded-md"
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full border border-gray-300 p-2 rounded-md"
-                />
-                <select
-                    name="topic"
-                    value={formData.topic}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 p-2 rounded-md"
-                >
-                    <option>Giao hàng</option>
-                    <option>Thanh toán</option>
-                    <option>Sản phẩm</option>
-                    <option>Khác</option>
-                </select>
-                <textarea
-                    name="message"
-                    placeholder="Mô tả vấn đề bạn gặp phải..."
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    className="w-full border border-gray-300 p-2 rounded-md h-32"
-                />
-                <button
-                    type="submit"
-                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-                >
-                    Gửi hỗ trợ
-                </button>
-            </form>
+            {/* Footer có sẵn */}
+            <Footers />
         </div>
     );
 }
+
+
 

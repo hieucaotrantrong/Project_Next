@@ -221,7 +221,8 @@ export default function Home() {
                         <img
                             src="./assets/logo.jpg"
                             alt="Logo"
-                            className="h-8 object-contain"
+                            className="h-8 object-contain cursor-pointer"
+                            onClick={() => navigate('/home')}
                         />
                         <div className="relative ml-2 flex-1">
                             <div className="flex items-center bg-white rounded-full px-3 py-1">
@@ -419,6 +420,7 @@ export default function Home() {
         </div>
     );
 }
+
 
 
 
