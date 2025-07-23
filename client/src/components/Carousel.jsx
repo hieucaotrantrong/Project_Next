@@ -25,14 +25,14 @@ export default function Carousel() {
                             </TECarouselItem>
                             <TECarouselItem itemID={2} className="relative float-left -mr-[100%] hidden w-full h-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none">
                                 <img
-                                    src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Banner/a2/6e/a26ed4cbc89ec9523d78c43ba4d6f2d4.png"
+                                    src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Banner/43/85/43854a7ba231f17252741049cc5a099a.png"
                                     className="w-full h-full object-cover border border-gray-300 rounded-lg"
                                     alt="Slide 2"
                                 />
                             </TECarouselItem>
                             <TECarouselItem itemID={2} className="relative float-left -mr-[100%] hidden w-full h-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none">
                                 <img
-                                    src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Banner/23/05/23050828d3211ce7b91e92473a3690b3.jpg"
+                                    src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Banner/91/1b/911bdb7d43d18d76d89279f143d90f2c.png"
                                     className="w-full h-full object-cover border border-gray-300 rounded-lg"
                                     alt="Slide 2"
                                 />

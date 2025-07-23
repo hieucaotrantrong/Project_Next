@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
+const formatPrice = (price) => {
+    // Chuyển về số nguyên trước khi format
+    const numPrice = Math.floor(parseFloat(price));
+    return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+};
+
 const ProductDetail = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
@@ -45,9 +51,9 @@ const ProductDetail = () => {
                             <p
                                 class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white"
                             >
-                                {product.price}
+                                {formatPrice(product.price)}₫
                             </p>
-                            <p className="text-gray-500 line-through mb-1">{product.originalPrice}₫</p>
+                            <p className="text-gray-500 line-through mb-1">{formatPrice(product.originalPrice)}₫</p>
                             <div class="flex items-center gap-2 mt-2 sm:mt-0">
                                 <div class="flex items-center gap-1">
                                     <svg
@@ -202,3 +208,5 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+

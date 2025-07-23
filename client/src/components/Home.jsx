@@ -111,18 +111,22 @@ export default function Home() {
                 </div>
 
                 {/* Bottom Menu */}
-                <div className="w-full max-w-[1280px] mx-auto flex flex-wrap gap-7 px-4 py-3 text-sm font-normal">
-                    {menuItems.map((item, index) => (
-                        <div key={index} className="flex items-center gap-1 cursor-pointer hover:underline">
-                            {item.icon}
-                            <span>{item.label}</span>
-                        </div>
-                    ))}
+                <div className="w-full max-w-[1280px] mx-auto px-4 py-3 text-sm font-normal">
+                    <div className="flex justify-between items-center">
+                        {menuItems.map((item, index) => (
+                            <div key={index} className="flex items-center gap-1 cursor-pointer hover:underline">
+                                {item.icon}
+                                <span>{item.label}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </header>
         </div>
     );
 }
+
+
 
 
 

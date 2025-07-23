@@ -53,11 +53,18 @@ const AdminPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // Chuyển đổi giá về số thuần (bỏ dấu chấm)
+            const formData = {
+                ...form,
+                originalPrice: form.originalPrice.replace(/\./g, ''),
+                price: form.price.replace(/\./g, '')
+            };
+
             if (editingProduct) {
-                await axios.put(`http://localhost:5000/api/products/${editingProduct.id}`, form);
+                await axios.put(`http://localhost:5000/api/products/${editingProduct.id}`, formData);
                 setEditingProduct(null);
             } else {
-                await axios.post('http://localhost:5000/api/products', form);
+                await axios.post('http://localhost:5000/api/products', formData);
             }
             setForm({
                 title: '',
@@ -102,6 +109,21 @@ const AdminPage = () => {
     /*------------------------------------------
       
     -------------------------------------------*/
+    const formatPrice = (value) => {
+        const numericValue = value.replace(/\D/g, '');
+        return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
+
+    const handlePriceChange = (field, value) => {
+        const formatted = formatPrice(value);
+        setForm({ ...form, [field]: formatted });
+    };
+
+    const formatDisplayPrice = (price) => {
+        // Chuyển về số nguyên trước khi format
+        const numPrice = Math.floor(parseFloat(price));
+        return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
     return (
         <div className="max-w-6xl mx-auto p-6">
             {/*Logout */}
@@ -176,16 +198,16 @@ const AdminPage = () => {
                         />
                         <input
                             type="text"
-                            placeholder="Giá gốc"
+                            placeholder="Giá gốc (VD: 46.637.000)"
                             value={form.originalPrice}
-                            onChange={(e) => setForm({ ...form, originalPrice: e.target.value })}
+                            onChange={(e) => handlePriceChange('originalPrice', e.target.value)}
                             className="border border-gray-300 rounded px-4 py-2"
                         />
                         <input
                             type="text"
-                            placeholder="Giá khuyến mãi"
+                            placeholder="Giá khuyến mãi (VD: 42.690.000)"
                             value={form.price}
-                            onChange={(e) => setForm({ ...form, price: e.target.value })}
+                            onChange={(e) => handlePriceChange('price', e.target.value)}
                             className="border border-gray-300 rounded px-4 py-2"
                         />
                         <input
@@ -251,8 +273,8 @@ const AdminPage = () => {
                                     className="w-32 h-32 object-cover rounded mb-2 border"
                                 />
                                 <h3 className="text-lg font-semibold">{item.title}</h3>
-                                <p className="text-gray-600">💰 Giá: <span className="text-green-600">{item.price} đ</span></p>
-                                <p className="text-sm text-gray-500">Giá gốc: {item.originalPrice} đ</p>
+                                <p className="text-gray-600">💰 Giá: <span className="text-green-600">{formatDisplayPrice(item.price)}₫</span></p>
+                                <p className="text-sm text-gray-500">Giá gốc: {formatDisplayPrice(item.originalPrice)}₫</p>
                                 <p className="text-sm text-gray-500">Giảm: {item.discount}%</p>
                                 <p className="text-sm text-gray-500">Tag: {item.tag}</p>
                                 <div className="mt-3 flex gap-2">
@@ -283,6 +305,12 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+
+
+
+
+
+
 
 
 

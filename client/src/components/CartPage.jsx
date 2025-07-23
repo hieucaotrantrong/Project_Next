@@ -26,9 +26,9 @@ const CartPage = () => {
     }, []);
 
     return (
-        <div className="p-6 bg-gray-100 min-h-screen">
+        <div className="w-full max-w-[1280px] mx-auto px-4 py-6  min-h-screen">
             <h1 className="text-2xl font-bold mb-6">Sản phẩm</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
                 {products.map((item, index) => (
                     <CartItem key={index} {...item} />
                 ))}
@@ -38,3 +38,5 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
+
