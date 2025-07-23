@@ -35,6 +35,46 @@ export default {
 
         const users = rows as User[];
         return users.length > 0 ? users[0] : null;
+    },
+
+    async updateProfile(userId: number, profileData: any): Promise<User | null> {
+        const { first_name, last_name, email, phone, address, birth_date, gender, avatar } = profileData;
+
+        // Convert birth_date to proper format for MySQL
+        let formattedBirthDate = null;
+        if (birth_date && birth_date.trim() !== '') {
+            const date = new Date(birth_date);
+            formattedBirthDate = date.toISOString().split('T')[0]; // Convert to YYYY-MM-DD format
+        }
+
+        await pool.execute(
+            'UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, birth_date = ?, gender = ?, avatar = ? WHERE id = ?',
+            [first_name, last_name, email, phone, address, formattedBirthDate, gender, avatar, userId]
+        );
+
+        return this.findById(userId);
+    },
+
+    async verifyPassword(userId: number, password: string): Promise<boolean> {
+        const user = await this.findById(userId);
+        if (!user) return false;
+
+        return await bcrypt.compare(password, user.password);
+    },
+
+    async changePassword(userId: number, newPassword: string): Promise<boolean> {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        const [result] = await pool.execute(
+            'UPDATE users SET password = ? WHERE id = ?',
+            [hashedPassword, userId]
+        );
+
+        return (result as any).affectedRows > 0;
     }
 };
+
+
+
 

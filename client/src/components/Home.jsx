@@ -77,9 +77,13 @@ export default function Home() {
                                     <img
                                         src={user.avatar || 'https://i.pravatar.cc/40'}
                                         alt="avatar"
-                                        className="w-8 h-8 rounded-full"
+                                        className="w-8 h-8 rounded-full cursor-pointer hover:ring-2 hover:ring-blue-300"
+                                        onClick={() => navigate('/profile')}
+                                        title="Xem profile"
                                     />
-                                    <span className="text-sm">Xin chào, {user.first_name}</span>
+                                    <span className="text-sm cursor-pointer" onClick={() => navigate('/profile')}>
+                                        Xin chào, {user.first_name}
+                                    </span>
                                 </div>
                                 <button
                                     onClick={handleLogout}
@@ -125,6 +129,7 @@ export default function Home() {
         </div>
     );
 }
+
 
 
 

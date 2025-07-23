@@ -17,6 +17,7 @@ import ChatBotIcon from "./components/ChatBotIcon";
 import CartPayPage from "./components/CartPayPage";
 import SupportPage from "./components/SupportPage";
 import PromoBanner from './components/PromoBanner';
+import Profile from './pages/Profile';
 /*----------------------------------
 Home Create
 -----------------------------------*/
@@ -74,7 +75,11 @@ function App() {
             </PrivateRoute>
           }
         />
-
+        <Route path="/profile" element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        } />
         <Route path="*" element={<Login />} />
       </Routes>
     </Router>
@@ -82,5 +87,6 @@ function App() {
 }
 
 export default App;
+
 
 

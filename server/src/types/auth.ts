@@ -1,8 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { DecodedToken } from '../types/auth';
+export interface DecodedToken {
+    userId: string;
+    // Add other properties as needed
+}
 
-export const adminAuth = async (
+export const auth = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -16,12 +19,6 @@ export const adminAuth = async (
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as DecodedToken;
-
-        if (!decoded.userId) {
-            res.status(403).json({ error: 'Token không hợp lệ' });
-            return;
-        }
-
         req.user = decoded;
         next();
     } catch (error) {
