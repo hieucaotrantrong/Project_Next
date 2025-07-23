@@ -142,7 +142,7 @@ export default function FlashSale() {
                                 <div className="text-xs text-gray-600 mb-2">{item.specs}</div>
                             )}
 
-                            <div className="text-red-600 font-bold text-base mb-1">₫ {item.price}</div>
+                            <div className="text-red-600 font-bold text-base mb-1"> {item.price}</div>
 
                             <div className="text-gray-400 line-through text-sm mb-2">
                                 ₫ {(parseInt(item.price.replace(/\./g, '')) * (100 + item.discount) / 100).toLocaleString()}
@@ -180,7 +180,7 @@ export default function FlashSale() {
                                 <div className="text-xs text-gray-600 mb-2">{item.specs}</div>
                             )}
 
-                            <div className="text-red-600 font-bold text-base mb-1">₫ {item.price}</div>
+                            <div className="text-red-600 font-bold text-base mb-1"> {item.price}</div>
 
                             <div className="text-gray-400 line-through text-sm mb-2">
                                 ₫ {(parseInt(item.price.replace(/\./g, '')) * (100 + item.discount) / 100).toLocaleString()}

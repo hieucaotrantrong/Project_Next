@@ -1,35 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-    Popover,
-    PopoverButton,
-    PopoverGroup,
-    PopoverPanel,
-} from '@headlessui/react';
-import {
-    ArrowPathIcon,
-    Bars3Icon,
-    ChartPieIcon,
-    CursorArrowRaysIcon,
-    FingerPrintIcon,
-    SquaresPlusIcon,
-    XMarkIcon,
-} from '@heroicons/react/24/outline';
+
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid';
 import Notifications from './Notifications';
 
-const products = [
-    { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
-    { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
-    { name: 'Security', description: 'Your customers’ data will be safe and secure', href: '#', icon: FingerPrintIcon },
-    { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-    { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
-];
-
-const callsToAction = [
-    { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-    { name: 'Contact sales', href: '#', icon: PhoneIcon },
-];
+import {
+    FaUser,
+    FaShoppingCart,
+    FaMapMarkerAlt,
+    FaSearch,
+} from "react-icons/fa";
 
 export default function Home() {
     const [user, setUser] = useState(null);
@@ -50,95 +30,104 @@ export default function Home() {
             navigate('/');
         }
     };
+    const menuItems = [
+        { icon: <img src="https://cdn.tgdd.vn/content/phonne-24x24.png" className="w-5 h-5" />, label: "Điện thoại" },
+        { icon: <img src="https://cdn.tgdd.vn/content/laptop-24x24.png" className="w-5 h-5" />, label: "Laptop" },
+        { icon: <img src="https://cdn.tgdd.vn/content/phu-kien-24x24.png" className="w-5 h-5" />, label: "Phụ kiện" },
+        { icon: <img src="https://cdn.tgdd.vn/content/smartwatch-24x24.png" className="w-5 h-5" />, label: "Smartwatch" },
+        { icon: <img src="https://cdn.tgdd.vn/content/watch-24x24.png" className="w-5 h-5" />, label: "Đồng Hồ" },
+        { icon: <img src="https://cdn.tgdd.vn/content/tablet-24x24.png" className="w-5 h-5" />, label: "Tablet" },
+        { icon: <img src="https://cdn.tgdd.vn/content/may-cu-24x24.png" className="w-5 h-5" />, label: "Mua máy thu cũ" },
+        { icon: <img src="https://cdn.tgdd.vn/content/PC-24x24.png" className="w-5 h-5" />, label: "Màn hình, Máy in" },
+        { icon: <img src="https://cdn.tgdd.vn/content/sim-24x24.png" className="w-5 h-5" />, label: "Sim, Thẻ cào" },
+        { icon: <img src="https://cdn.tgdd.vn/content/tien-ich-24x24.png" className="w-5 h-5" />, label: "Dịch vụ tiện ích" },
+    ];
+
 
     return (
-        <header className="bg-white">
-            <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-                <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5">
+        <div>
+            {/* Header section với background vàng */}
+            <header className="w-full bg-[#ffd400]">
+                <div className="w-full max-w-[1280px] mx-auto flex items-center justify-between px-4 py-2">
+                    {/* Logo + Search */}
+                    <div className="flex items-center flex-1 max-w-[600px]">
                         <img
-                            alt=""
-                            src="https://icolor.vn/wp-content/uploads/2024/08/logo-lv-1.jpg"
-                            className="h-8 w-auto"
+                            src="./assets/logo.jpg"
+                            alt="Logo"
+                            className="h-8 object-contain"
                         />
-                    </a>
-                </div>
-
-                <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-                    <Popover className="relative">
-                        <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold text-gray-900">
-                            Thông tin
-                            <ChevronDownIcon className="h-5 w-5 text-gray-400" />
-                        </PopoverButton>
-
-                        <PopoverPanel className="absolute z-10 mt-3 w-screen max-w-md rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                            <div className="p-4">
-                                {products.map((item) => (
-                                    <div
-                                        key={item.name}
-                                        className="group relative flex items-center gap-x-6 rounded-lg p-4 hover:bg-gray-50"
-                                    >
-                                        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                            <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
-                                        </div>
-                                        <div>
-                                            <a href={item.href} className="font-semibold text-gray-900">
-                                                {item.name}
-                                            </a>
-                                            <p className="text-gray-600">{item.description}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </PopoverPanel>
-                    </Popover>
-
-                    <a href="#" className="text-sm font-semibold text-gray-900">Kết nối</a>
-                    <Link to="/support" className="text-sm font-semibold text-gray-900">
-                        Hỗ trợ
-                    </Link>
-                    <a href="#" className="text-sm font-semibold text-gray-900">Tải ứng dụng</a>
-                </PopoverGroup>
-
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end space-x-6">
-                    {user ? (
-                        <>
-                            <Notifications />
-                            {/* Thông tin người dùng */}
-                            <div className="flex items-center space-x-2">
-                                <img
-                                    src={user.avatar || 'https://i.pravatar.cc/40'}
-                                    alt="avatar"
-                                    className="w-8 h-8 rounded-full"
+                        <div className="relative ml-2 flex-1">
+                            <div className="flex items-center bg-white rounded-full px-3 py-1">
+                                <FaSearch className="text-gray-500 text-sm" />
+                                <input
+                                    type="text"
+                                    placeholder="Bạn tìm gì..."
+                                    className="w-full px-2 py-1 text-sm outline-none bg-transparent"
                                 />
-                                <p>Xin chào, {user.first_name}</p>
                             </div>
+                        </div>
+                    </div>
 
-                            {/*----------------------------------
-                            Logout
-                            -----------------------------------*/}
-                            <button
-                                onClick={handleLogout}
-                                className="text-sm font-semibold text-gray-900 hover:underline"
-                            >
-                                Đăng xuất
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <Link to="/login" className="text-sm font-semibold text-gray-900">
-                                Đăng nhập <span aria-hidden="true">&rarr;</span>
-                            </Link>
-                            <Link to="/singin" className="text-sm font-semibold text-gray-900">
-                                Đăng kí <span aria-hidden="true">&rarr;</span>
-                            </Link>
-                        </>
-                    )}
+                    {/* Account + Cart + Location */}
+                    <div className="flex items-center gap-6 ml-4">
+                        {user ? (
+                            <>
+                                <Notifications />
+                                <div className="flex items-center gap-2">
+                                    <img
+                                        src={user.avatar || 'https://i.pravatar.cc/40'}
+                                        alt="avatar"
+                                        className="w-8 h-8 rounded-full"
+                                    />
+                                    <span className="text-sm">Xin chào, {user.first_name}</span>
+                                </div>
+                                <button
+                                    onClick={handleLogout}
+                                    className="text-sm hover:underline"
+                                >
+                                    Đăng xuất
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login" className="flex items-center gap-1 text-sm hover:underline">
+                                    <FaUser />
+                                    <span>Đăng nhập</span>
+                                </Link>
+                                <Link to="/signup" className="text-sm hover:underline">
+                                    Đăng ký
+                                </Link>
+                            </>
+                        )}
+                        <div className="flex items-center gap-1 text-sm hover:underline cursor-pointer">
+                            <FaShoppingCart />
+                            <span>Giỏ hàng</span>
+                        </div>
+                        <div className="flex items-center gap-1 bg-yellow-300 px-3 py-2 rounded-full cursor-pointer text-sm">
+                            <FaMapMarkerAlt />
+                            <span className="truncate max-w-[120px]">40 Đống Đa, P.K...</span>
+                        </div>
+                    </div>
                 </div>
 
-            </nav>
-        </header>
+                {/* Bottom Menu */}
+                <div className="w-full max-w-[1280px] mx-auto flex flex-wrap gap-7 px-4 py-3 text-sm font-normal">
+                    {menuItems.map((item, index) => (
+                        <div key={index} className="flex items-center gap-1 cursor-pointer hover:underline">
+                            {item.icon}
+                            <span>{item.label}</span>
+                        </div>
+                    ))}
+                </div>
+            </header>
+        </div>
     );
 }
+
+
+
+
+
+
 
 

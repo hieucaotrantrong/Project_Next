@@ -32,18 +32,18 @@ export default function Footers() {
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Giới thiệu công ty (MWG.vn) </a>
+                                    <a href="https://mwg.vn/" className="text-gray-700 transition hover:opacity-75"> Giới thiệu công ty (MWG.vn) </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Tuyển dụng </a>
+                                    <a href="https://vieclam.thegioididong.com/" className="text-gray-700 transition hover:opacity-75"> Tuyển dụng </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Gửi góp ý, khiếu nại </a>
+                                    <a href="https://www.thegioididong.com/lien-he" className="text-gray-700 transition hover:opacity-75"> Gửi góp ý, khiếu nại </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Tìm siêu thị (2.965 shop) </a>
+                                    <a href="https://www.thegioididong.com/he-thong-sieu-thi-the-gioi-di-dong" className="text-gray-700 transition hover:opacity-75"> Tìm siêu thị (2.965 shop) </a>
                                 </li>
                             </ul>
                         </div>
