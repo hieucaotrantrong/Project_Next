@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const formatPrice = (price) => {
-   
+
     const numPrice = Math.floor(parseFloat(price));
     return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
@@ -11,8 +11,19 @@ const CartItem = ({ id, image, title, originalPrice, price, discount }) => {
     const navigate = useNavigate();
 
     const handleBuyNow = () => {
+        // Lấy địa chỉ từ localStorage
+        const savedAddress = localStorage.getItem('userAddress') || '';
+
         navigate("/cartpay", {
-            state: { id, image, title, originalPrice, price, discount }
+            state: {
+                id,
+                image,
+                title,
+                originalPrice,
+                price,
+                discount,
+                userAddress: savedAddress
+            }
         });
     };
 
@@ -52,6 +63,7 @@ const CartItem = ({ id, image, title, originalPrice, price, discount }) => {
 };
 
 export default CartItem;
+
 
 
 

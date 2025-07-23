@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -9,8 +9,16 @@ const CartPayPage = () => {
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
-    const [address, setAddress] = useState("");
+    const [address, setAddress] = useState(product?.userAddress || "");
     const [isLoading, setIsLoading] = useState(false);
+
+    // Load địa chỉ từ localStorage nếu không có trong state
+    useEffect(() => {
+        const savedAddress = localStorage.getItem('userAddress');
+        if (savedAddress) {
+            setAddress(savedAddress);
+        }
+    }, []);
 
     const handleOrder = async () => {
         if (!fullName || !phone || !address || !email) {
@@ -142,6 +150,8 @@ const CartPayPage = () => {
 };
 
 export default CartPayPage;
+
+
 
 
 
