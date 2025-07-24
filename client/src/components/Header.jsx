@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 'use client'
 
@@ -24,6 +24,8 @@ const menuItems = [
 ];
 
 export default function Header() {
+    const navigate = useNavigate();
+
     return (
         <header className="w-full bg-[#ffd400]">
             {/* Top Header */}
@@ -34,7 +36,8 @@ export default function Header() {
                     <img
                         src="./assets/logo.jpg"
                         alt="Logo"
-                        className="h-10 object-contain"
+                        className="h-10 object-contain cursor-pointer"
+                        onClick={() => navigate('/')}
                     />
                     <div className="relative ml-2 flex-1">
                         <div className="flex items-center bg-white rounded-full px-3 py-1">
