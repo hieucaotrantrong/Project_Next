@@ -4,7 +4,7 @@ import axios from "axios";
 import Home from "./Home";
 import Footers from "./Footers";
 import { useCart } from "../context/CartContext";
-
+import Carousel from "./Carousel";
 const formatPrice = (price) => {
     // Chuyển về số nguyên trước khi format
     const numPrice = Math.floor(parseFloat(price));
@@ -43,6 +43,7 @@ const ProductDetail = () => {
     if (loading) return (
         <div className="min-h-screen bg-gray-50">
             <Home />
+            <Carousel />
             <div className="p-6">Đang tải...</div>
             <Footers />
         </div>

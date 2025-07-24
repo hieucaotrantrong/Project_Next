@@ -59,10 +59,15 @@ export const CartProvider = ({ children }) => {
     };
 
     const getTotalPrice = () => {
-        return cartItems.reduce((total, item) => {
-            const price = parseFloat(item.price.toString().replace(/\./g, ''));
-            return total + (price * item.quantity);
+        const total = cartItems.reduce((total, item) => {
+            // Chỉ parseFloat trực tiếp, không xử lý dấu chấm
+            const priceValue = parseFloat(item.price);
+            const itemTotal = priceValue * item.quantity;
+
+            return total + itemTotal;
         }, 0);
+
+        return total;
     };
 
     const getTotalItems = () => {
@@ -89,3 +94,23 @@ export const CartProvider = ({ children }) => {
         </CartContext.Provider>
     );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

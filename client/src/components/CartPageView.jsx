@@ -8,8 +8,12 @@ const CartPageView = () => {
     const navigate = useNavigate();
     const { cartItems, updateQuantity, removeFromCart, getTotalPrice, clearCart } = useCart();
 
+    // Debug: xem giá trị thực trong cartItems
+    console.log('Cart items:', cartItems);
+    console.log('Total price from context:', getTotalPrice());
+
     const formatPrice = (price) => {
-        const numPrice = Math.floor(parseFloat(price.toString().replace(/\./g, '')));
+        const numPrice = Math.floor(parseFloat(price));
         return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     };
 
@@ -123,7 +127,16 @@ const CartPageView = () => {
                                     </div>
                                 </div>
 
-                                <button className="w-full bg-[#ffd400] hover:bg-yellow-500 text-black font-medium py-3 rounded-lg mb-3">
+                                <button
+                                    onClick={() => navigate('/cartpay', {
+                                        state: {
+                                            cartItems: cartItems,
+                                            totalPrice: getTotalPrice(),
+                                            isMultipleItems: true
+                                        }
+                                    })}
+                                    className="w-full bg-[#ffd400] hover:bg-yellow-500 text-black font-medium py-3 rounded-lg mb-3"
+                                >
                                     Thanh toán
                                 </button>
 
@@ -145,5 +158,23 @@ const CartPageView = () => {
 };
 
 export default CartPageView;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

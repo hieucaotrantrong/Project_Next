@@ -115,7 +115,7 @@ export default function FlashSale() {
     };
 
     return (
-        <div className="bg-white mt-6 p-8 shadow rounded-md borderw-full mx-auto ml-20">
+        <div className="bg-white mt-6 p-8 shadow rounded-md borderw-full mx-auto ml-40">
             {/* Header Flash Sale */}
             <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-2 ml-4">
