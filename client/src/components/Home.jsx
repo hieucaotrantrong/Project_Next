@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid';
 import Notifications from './Notifications';
@@ -26,6 +27,12 @@ export default function Home() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
+    const { cartItems, getTotalItems, getTotalPrice, updateQuantity, removeFromCart, isCartOpen, setIsCartOpen } = useCart();
+
+    const formatPrice = (price) => {
+        const numPrice = Math.floor(parseFloat(price.toString().replace(/\./g, '')));
+        return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
 
     useEffect(() => {
         const savedUser = localStorage.getItem('user');
@@ -219,7 +226,7 @@ export default function Home() {
                     {/* Logo + Search */}
                     <div className="flex items-center flex-1 max-w-[600px]">
                         <img
-                            src="./assets/logo.jpg"
+                            src="/assets/logo.jpg"
                             alt="Logo"
                             className="h-8 object-contain cursor-pointer"
                             onClick={() => navigate('/home')}
@@ -269,9 +276,12 @@ export default function Home() {
                                 </Link>
                             </>
                         )}
-                        <div className="flex items-center gap-1 text-sm hover:underline cursor-pointer">
+                        <div
+                            className="flex items-center gap-1 text-sm hover:underline cursor-pointer"
+                            onClick={() => navigate('/cart')}
+                        >
                             <FaShoppingCart />
-                            <span>Giỏ hàng</span>
+                            <span>Giỏ hàng ({getTotalItems()})</span>
                         </div>
                         <Link to="/support" className="text-sm font-semibold text-gray-900">
                             Hỗ trợ
@@ -417,9 +427,83 @@ export default function Home() {
                     <CartPage searchQuery={searchQuery} />
                 </div>
             )}
+
+            {/* Cart Modal */}
+            {isCartOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg w-[800px] max-w-[90vw] max-h-[80vh] flex flex-col">
+                        <div className="flex items-center justify-between p-6 border-b">
+                            <h3 className="text-xl font-bold">Giỏ hàng của bạn</h3>
+                            <button
+                                onClick={() => setIsCartOpen(false)}
+                                className="text-gray-400 hover:text-gray-600 text-2xl"
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto p-6">
+                            {cartItems.length === 0 ? (
+                                <p className="text-center text-gray-500">Giỏ hàng trống</p>
+                            ) : (
+                                <div className="space-y-4">
+                                    {cartItems.map((item) => (
+                                        <div key={item.id} className="flex items-center gap-4 p-4 border rounded-lg">
+                                            <img src={item.image} alt={item.title} className="w-16 h-16 object-contain" />
+                                            <div className="flex-1">
+                                                <h4 className="font-medium">{item.title}</h4>
+                                                <p className="text-red-600 font-bold">{formatPrice(item.price)}₫</p>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                                    className="w-8 h-8 flex items-center justify-center border rounded"
+                                                >
+                                                    -
+                                                </button>
+                                                <span className="w-8 text-center">{item.quantity}</span>
+                                                <button
+                                                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                                    className="w-8 h-8 flex items-center justify-center border rounded"
+                                                >
+                                                    +
+                                                </button>
+                                            </div>
+                                            <button
+                                                onClick={() => removeFromCart(item.id)}
+                                                className="text-red-500 hover:text-red-700"
+                                            >
+                                                Xóa
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {cartItems.length > 0 && (
+                            <div className="p-6 border-t">
+                                <div className="flex justify-between items-center mb-4">
+                                    <span className="text-lg font-bold">Tổng cộng:</span>
+                                    <span className="text-xl font-bold text-red-600">
+                                        {formatPrice(getTotalPrice())}₫
+                                    </span>
+                                </div>
+                                <button className="w-full bg-[#ffd400] hover:bg-yellow-500 text-black font-medium py-3 rounded-lg">
+                                    Thanh toán
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
+
+
+
+
 
 
 

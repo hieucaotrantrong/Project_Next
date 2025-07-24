@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
+import { CartProvider } from './context/CartContext';
 import Header from './components/Header';
 import Footers from './components/Footers';
 import Carousel from './components/Carousel';
@@ -12,6 +13,7 @@ import Signup from './pages/Signup';
 import AdminPage from './pages/AdminPage';
 import PrivateRoute from './service/PrivateRoute';
 import CartPage from "./components/CartPage";
+import CartPageView from "./components/CartPageView";
 import ProductDetail from "./components/ProductDetail";
 import ChatBotIcon from "./components/ChatBotIcon";
 import CartPayPage from "./components/CartPayPage";
@@ -53,40 +55,35 @@ Router
 -----------------------------------*/
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/admin" element={
-          <PrivateRoute adminRequired={true}>
-            <AdminPage />
-          </PrivateRoute>
-        } />
-        <Route path="/" element={<CartPage />} />
-        <Route path="/cartpay" element={<CartPayPage />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/support" element={<SupportPage />} />
-        <Route
-          path="/home"
-          element={
+    <CartProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/home" element={<HomeLoggedInPage />} />
+          <Route path="/cart" element={<CartPageView />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/cartpay" element={<CartPayPage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/admin" element={
             <PrivateRoute>
-              <HomeLoggedInPage />
+              <AdminPage />
             </PrivateRoute>
-          }
-        />
-        <Route path="/profile" element={
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        } />
-        <Route path="*" element={<Login />} />
-      </Routes>
-    </Router>
+          } />
+        </Routes>
+      </Router>
+    </CartProvider>
   );
 }
 
 export default App;
+
+
+
+
+
 
 
 
