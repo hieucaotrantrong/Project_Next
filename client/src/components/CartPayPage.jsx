@@ -78,6 +78,8 @@ const CartPayPage = () => {
         setIsLoading(true);
 
         try {
+            const token = localStorage.getItem('token'); // Thêm dòng này
+
             if (isMultipleItems) {
                 // Xử lý nhiều sản phẩm
                 for (const item of cartItems) {
@@ -91,6 +93,10 @@ const CartPayPage = () => {
                         productPrice: item.price,
                         quantity: item.quantity,
                         paymentMethod
+                    }, {
+                        headers: {
+                            'Authorization': `Bearer ${token}` // Thêm header
+                        }
                     });
                 }
             } else {
@@ -104,6 +110,10 @@ const CartPayPage = () => {
                     productTitle: product.title,
                     productPrice: product.price,
                     paymentMethod
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}` // Thêm header
+                    }
                 });
             }
 
@@ -122,7 +132,7 @@ const CartPayPage = () => {
                 fetchWalletInfo();
             }
         } catch (err) {
-            console.error(err);
+            console.error('Chi tiết lỗi:', err.response?.data); // Xem lỗi chi tiết
             alert("Đặt hàng thất bại. Vui lòng thử lại.");
         } finally {
             setIsLoading(false);
@@ -243,8 +253,8 @@ const CartPayPage = () => {
                                     {/* Thanh toán khi nhận hàng */}
                                     <div
                                         className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${paymentMethod === "cod"
-                                                ? "border-blue-500 bg-blue-50"
-                                                : "border-gray-200 hover:border-gray-300"
+                                            ? "border-blue-500 bg-blue-50"
+                                            : "border-gray-200 hover:border-gray-300"
                                             }`}
                                         onClick={() => setPaymentMethod("cod")}
                                     >
@@ -272,8 +282,8 @@ const CartPayPage = () => {
                                     {/* Thanh toán bằng ví */}
                                     <div
                                         className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${paymentMethod === "wallet"
-                                                ? "border-purple-500 bg-purple-50"
-                                                : "border-gray-200 hover:border-gray-300"
+                                            ? "border-purple-500 bg-purple-50"
+                                            : "border-gray-200 hover:border-gray-300"
                                             }`}
                                         onClick={() => setPaymentMethod("wallet")}
                                     >
@@ -329,8 +339,8 @@ const CartPayPage = () => {
                             <button
                                 onClick={handleOrder}
                                 className={`w-full ${isLoading || (paymentMethod === "wallet" && wallet && wallet.balance < getTotalAmount())
-                                        ? 'bg-gray-400 cursor-not-allowed'
-                                        : 'bg-red-500 hover:bg-red-600'
+                                    ? 'bg-gray-400 cursor-not-allowed'
+                                    : 'bg-red-500 hover:bg-red-600'
                                     } text-white py-3 rounded-md text-lg transition-colors`}
                                 disabled={isLoading || (paymentMethod === "wallet" && wallet && wallet.balance < getTotalAmount())}
                             >
@@ -347,6 +357,8 @@ const CartPayPage = () => {
 };
 
 export default CartPayPage;
+
+
 
 
 

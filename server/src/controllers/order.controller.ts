@@ -41,14 +41,12 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
         Xử lý thanh toán bằng ví
         -------------------------------------------*/
         if (paymentMethod === "wallet") {
-            // Lấy userId từ token (cần thêm auth middleware)
             const token = req.headers.authorization?.split(' ')[1];
             if (!token) {
                 res.status(401).json({ error: "Cần đăng nhập để thanh toán bằng ví" });
                 return;
             }
 
-            // Decode token để lấy userId
             const jwt = require('jsonwebtoken');
             const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
             const userId = decoded.userId;
@@ -65,36 +63,45 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
                 return;
             }
 
-            // Bắt đầu transaction
-            await pool.execute('START TRANSACTION');
-
+            // Sử dụng connection cho transaction
+            const connection = await pool.getConnection();
+            
             try {
+                await connection.beginTransaction();
+
                 // Tạo đơn hàng với trạng thái đã thanh toán
-                await pool.execute(
+                await connection.execute(
                     "INSERT INTO orders (full_name, email, phone, address, product_id, product_title, product_price, status, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, 'confirmed', 'wallet')",
                     [fullName, email, phone, address, productId, productTitle, productPrice]
                 );
 
                 // Trừ tiền từ ví
-                await pool.execute(
+                await connection.execute(
                     'UPDATE wallets SET balance = balance - ? WHERE user_id = ?',
                     [totalAmount, userId]
                 );
 
-                // Ghi lại lịch sử giao dịch
-                await pool.execute(
-                    'INSERT INTO wallet_transactions (user_id, type, amount, description) VALUES (?, "payment", ?, ?)',
-                    [userId, totalAmount, `Thanh toán đơn hàng: ${productTitle}`]
-                );
+                // Ghi lại lịch sử giao dịch (nếu có bảng này)
+                try {
+                    await connection.execute(
+                        'INSERT INTO wallet_transactions (user_id, type, amount, description) VALUES (?, "payment", ?, ?)',
+                        [userId, totalAmount, `Thanh toán đơn hàng: ${productTitle}`]
+                    );
+                } catch (err) {
+                    // Bỏ qua nếu bảng wallet_transactions chưa tồn tại
+                    console.log('Bảng wallet_transactions chưa tồn tại');
+                }
 
-                await pool.execute('COMMIT');
+                await connection.commit();
                 res.status(200).json({
                     message: "Đặt hàng và thanh toán thành công",
                     paymentMethod: "wallet"
                 });
             } catch (error) {
-                await pool.execute('ROLLBACK');
+                await connection.rollback();
                 throw error;
+            } finally {
+                connection.release();
             }
         } else {
             /*-----------------------------------------
@@ -212,6 +219,9 @@ export const updateOrderStatus = async (req: Request, res: Response): Promise<vo
         });
     }
 };
+
+
+
 
 
 
