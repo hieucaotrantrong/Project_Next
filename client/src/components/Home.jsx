@@ -11,6 +11,7 @@ import {
     FaShoppingCart,
     FaMapMarkerAlt,
     FaSearch,
+    FaWallet,  // Thêm icon ví
 } from "react-icons/fa";
 
 export default function Home() {
@@ -249,8 +250,17 @@ export default function Home() {
                     <div className="flex items-center gap-6 ml-4">
                         {user ? (
                             <>
-
                                 <Notifications />
+
+                                {/* Thêm icon ví */}
+                                <div
+                                    className="flex items-center gap-1 text-sm hover:underline cursor-pointer"
+                                    onClick={() => navigate('/wallet')}
+                                >
+                                    <FaWallet />
+                                    <span>Ví của tôi</span>
+                                </div>
+
                                 <div className="flex items-center gap-2">
                                     <img
                                         src={user.avatar || 'https://i.pravatar.cc/40'}
@@ -263,7 +273,6 @@ export default function Home() {
                                         Xin chào, {user.first_name}
                                     </span>
                                 </div>
-
                             </>
                         ) : (
                             <>
@@ -500,6 +509,7 @@ export default function Home() {
         </div>
     );
 }
+
 
 
 

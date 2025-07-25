@@ -20,6 +20,7 @@ import CartPayPage from "./components/CartPayPage";
 import SupportPage from "./components/SupportPage";
 import PromoBanner from './components/PromoBanner';
 import Profile from './pages/Profile';
+import WalletPage from './components/WalletPage';
 /*----------------------------------
 Home Create
 -----------------------------------*/
@@ -72,6 +73,7 @@ function App() {
               <AdminPage />
             </PrivateRoute>
           } />
+          <Route path="/wallet" element={<WalletPage />} />
         </Routes>
       </Router>
     </CartProvider>
@@ -79,6 +81,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

@@ -13,6 +13,8 @@ const CartPayPage = () => {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState(product?.userAddress || "");
     const [isLoading, setIsLoading] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState("cod"); // "cod" hoặc "wallet"
+    const [wallet, setWallet] = useState(null);
 
     // Load địa chỉ từ localStorage nếu không có trong state
     useEffect(() => {
@@ -20,7 +22,31 @@ const CartPayPage = () => {
         if (savedAddress) {
             setAddress(savedAddress);
         }
+        fetchWalletInfo();
     }, []);
+
+    const fetchWalletInfo = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (token) {
+                const response = await axios.get('http://localhost:5000/api/wallet', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setWallet(response.data.wallet);
+            }
+        } catch (error) {
+            console.error('Lỗi lấy thông tin ví:', error);
+        }
+    };
+
+    const formatPrice = (price) => {
+        const numPrice = Math.floor(parseFloat(price));
+        return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
+
+    const getTotalAmount = () => {
+        return isMultipleItems ? totalPrice : product?.price;
+    };
 
     const handleOrder = async () => {
         if (!fullName || !phone || !address || !email) {
@@ -40,6 +66,15 @@ const CartPayPage = () => {
             return;
         }
 
+        // Kiểm tra số dư ví nếu chọn thanh toán bằng ví
+        if (paymentMethod === "wallet") {
+            const totalAmount = getTotalAmount();
+            if (!wallet || wallet.balance < totalAmount) {
+                alert("Số dư ví không đủ để thanh toán. Vui lòng nạp thêm tiền hoặc chọn thanh toán khi nhận hàng.");
+                return;
+            }
+        }
+
         setIsLoading(true);
 
         try {
@@ -54,7 +89,8 @@ const CartPayPage = () => {
                         productId: item.id,
                         productTitle: item.title,
                         productPrice: item.price,
-                        quantity: item.quantity
+                        quantity: item.quantity,
+                        paymentMethod
                     });
                 }
             } else {
@@ -67,25 +103,30 @@ const CartPayPage = () => {
                     productId: product.id,
                     productTitle: product.title,
                     productPrice: product.price,
+                    paymentMethod
                 });
             }
 
-            alert("Đặt hàng thành công!");
+            alert(paymentMethod === "wallet"
+                ? "Đặt hàng và thanh toán thành công! Số tiền đã được trừ từ ví."
+                : "Đặt hàng thành công! Bạn sẽ thanh toán khi nhận hàng."
+            );
+
             setFullName("");
             setEmail("");
             setPhone("");
             setAddress("");
+
+            // Refresh wallet info nếu thanh toán bằng ví
+            if (paymentMethod === "wallet") {
+                fetchWalletInfo();
+            }
         } catch (err) {
             console.error(err);
             alert("Đặt hàng thất bại. Vui lòng thử lại.");
         } finally {
             setIsLoading(false);
         }
-    };
-
-    const formatPrice = (price) => {
-        const numPrice = Math.floor(parseFloat(price));
-        return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     };
 
     const displayData = isMultipleItems ? {
@@ -195,10 +236,103 @@ const CartPayPage = () => {
                                 />
                             </div>
 
+                            {/* Phương thức thanh toán */}
+                            <div>
+                                <label className="block text-lg font-medium mb-4">Phương thức thanh toán</label>
+                                <div className="space-y-3">
+                                    {/* Thanh toán khi nhận hàng */}
+                                    <div
+                                        className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${paymentMethod === "cod"
+                                                ? "border-blue-500 bg-blue-50"
+                                                : "border-gray-200 hover:border-gray-300"
+                                            }`}
+                                        onClick={() => setPaymentMethod("cod")}
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <input
+                                                type="radio"
+                                                name="paymentMethod"
+                                                value="cod"
+                                                checked={paymentMethod === "cod"}
+                                                onChange={() => setPaymentMethod("cod")}
+                                                className="w-4 h-4 text-blue-600"
+                                            />
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                                    <span className="text-green-600 text-lg">💵</span>
+                                                </div>
+                                                <div>
+                                                    <p className="font-semibold text-gray-800">Thanh toán khi nhận hàng</p>
+                                                    <p className="text-sm text-gray-600">Thanh toán bằng tiền mặt khi nhận được sản phẩm</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Thanh toán bằng ví */}
+                                    <div
+                                        className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${paymentMethod === "wallet"
+                                                ? "border-purple-500 bg-purple-50"
+                                                : "border-gray-200 hover:border-gray-300"
+                                            }`}
+                                        onClick={() => setPaymentMethod("wallet")}
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <input
+                                                type="radio"
+                                                name="paymentMethod"
+                                                value="wallet"
+                                                checked={paymentMethod === "wallet"}
+                                                onChange={() => setPaymentMethod("wallet")}
+                                                className="w-4 h-4 text-purple-600"
+                                            />
+                                            <div className="flex items-center gap-3 flex-1">
+                                                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                                    <span className="text-purple-600 text-lg">💳</span>
+                                                </div>
+                                                <div className="flex-1">
+                                                    <p className="font-semibold text-gray-800">Thanh toán bằng ví điện tử</p>
+                                                    <p className="text-sm text-gray-600">
+                                                        Số dư hiện tại: <span className="font-semibold text-purple-600">
+                                                            {formatPrice(wallet?.balance || 0)}₫
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                {wallet && wallet.balance < getTotalAmount() && (
+                                                    <div className="text-red-500 text-sm font-medium">
+                                                        Không đủ số dư
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Tổng thanh toán */}
+                            <div className="bg-gray-50 rounded-lg p-4">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-lg font-semibold">Tổng thanh toán:</span>
+                                    <span className="text-2xl font-bold text-red-600">
+                                        {formatPrice(getTotalAmount())}₫
+                                    </span>
+                                </div>
+                                {paymentMethod === "wallet" && wallet && wallet.balance >= getTotalAmount() && (
+                                    <div className="mt-2 text-sm text-gray-600">
+                                        Số dư còn lại sau thanh toán: <span className="font-semibold text-green-600">
+                                            {formatPrice(wallet.balance - getTotalAmount())}₫
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+
                             <button
                                 onClick={handleOrder}
-                                className={`w-full ${isLoading ? 'bg-gray-400' : 'bg-red-500 hover:bg-red-600'} text-white py-3 rounded-md text-lg`}
-                                disabled={isLoading}
+                                className={`w-full ${isLoading || (paymentMethod === "wallet" && wallet && wallet.balance < getTotalAmount())
+                                        ? 'bg-gray-400 cursor-not-allowed'
+                                        : 'bg-red-500 hover:bg-red-600'
+                                    } text-white py-3 rounded-md text-lg transition-colors`}
+                                disabled={isLoading || (paymentMethod === "wallet" && wallet && wallet.balance < getTotalAmount())}
                             >
                                 {isLoading ? 'Đang xử lý...' : 'Xác Nhận Đặt Hàng'}
                             </button>
@@ -213,6 +347,8 @@ const CartPayPage = () => {
 };
 
 export default CartPayPage;
+
+
 
 
 

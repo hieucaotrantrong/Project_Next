@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SupportManagement from '../components/SupportManagement';
 import OrderManagement from '../components/OrderManagement';
+import WalletManagement from '../components/WalletManagement';
 /*------------------------------------------
 
 -------------------------------------------*/
@@ -169,6 +170,15 @@ const AdminPage = () => {
                     Quản lý đơn hàng
                 </button>
                 <button
+                    onClick={() => setActiveTab('wallet')}
+                    className={`px-6 py-2 rounded-lg ${activeTab === 'wallet'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-200 hover:bg-gray-300'
+                        }`}
+                >
+                    Quản lý ví
+                </button>
+                <button
                     onClick={() => setActiveTab('support')}
                     className={`px-6 py-2 rounded-lg ${activeTab === 'support'
                         ? 'bg-blue-600 text-white'
@@ -297,6 +307,8 @@ const AdminPage = () => {
                 </>
             ) : activeTab === 'orders' ? (
                 <OrderManagement />
+            ) : activeTab === 'wallet' ? (
+                <WalletManagement />
             ) : (
                 <SupportManagement />
             )}
@@ -305,6 +317,8 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+
+
 
 
 

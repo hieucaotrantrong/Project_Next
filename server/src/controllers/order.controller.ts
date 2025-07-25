@@ -15,7 +15,18 @@ interface OrderRow extends RowDataPacket {
   -------------------------------------------*/
 export const createOrder = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { fullName, email, phone, address, productId, productTitle, productPrice } = req.body;
+        const {
+            fullName,
+            email,
+            phone,
+            address,
+            productId,
+            productTitle,
+            productPrice,
+            quantity = 1,
+            paymentMethod = "cod"
+        } = req.body;
+
         /*-----------------------------------------
                 Check db
         -------------------------------------------*/
@@ -23,15 +34,82 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
             res.status(400).json({ error: "Thiếu thông tin đơn hàng" });
             return;
         }
-        /*-----------------------------------------
-              Add db
-       -------------------------------------------*/
-        await pool.execute(
-            "INSERT INTO orders (full_name, email, phone, address, product_id, product_title, product_price, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')",
-            [fullName, email, phone, address, productId, productTitle, productPrice]
-        );
 
-        res.status(200).json({ message: "Đặt hàng thành công" });
+        const totalAmount = productPrice * quantity;
+
+        /*-----------------------------------------
+        Xử lý thanh toán bằng ví
+        -------------------------------------------*/
+        if (paymentMethod === "wallet") {
+            // Lấy userId từ token (cần thêm auth middleware)
+            const token = req.headers.authorization?.split(' ')[1];
+            if (!token) {
+                res.status(401).json({ error: "Cần đăng nhập để thanh toán bằng ví" });
+                return;
+            }
+
+            // Decode token để lấy userId
+            const jwt = require('jsonwebtoken');
+            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+            const userId = decoded.userId;
+
+            // Kiểm tra số dư ví
+            const [wallets] = await pool.execute(
+                'SELECT balance FROM wallets WHERE user_id = ?',
+                [userId]
+            );
+
+            const wallet = (wallets as any[])[0];
+            if (!wallet || wallet.balance < totalAmount) {
+                res.status(400).json({ error: "Số dư ví không đủ để thanh toán" });
+                return;
+            }
+
+            // Bắt đầu transaction
+            await pool.execute('START TRANSACTION');
+
+            try {
+                // Tạo đơn hàng với trạng thái đã thanh toán
+                await pool.execute(
+                    "INSERT INTO orders (full_name, email, phone, address, product_id, product_title, product_price, status, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, 'confirmed', 'wallet')",
+                    [fullName, email, phone, address, productId, productTitle, productPrice]
+                );
+
+                // Trừ tiền từ ví
+                await pool.execute(
+                    'UPDATE wallets SET balance = balance - ? WHERE user_id = ?',
+                    [totalAmount, userId]
+                );
+
+                // Ghi lại lịch sử giao dịch
+                await pool.execute(
+                    'INSERT INTO wallet_transactions (user_id, type, amount, description) VALUES (?, "payment", ?, ?)',
+                    [userId, totalAmount, `Thanh toán đơn hàng: ${productTitle}`]
+                );
+
+                await pool.execute('COMMIT');
+                res.status(200).json({
+                    message: "Đặt hàng và thanh toán thành công",
+                    paymentMethod: "wallet"
+                });
+            } catch (error) {
+                await pool.execute('ROLLBACK');
+                throw error;
+            }
+        } else {
+            /*-----------------------------------------
+            Thanh toán khi nhận hàng (COD)
+            -------------------------------------------*/
+            await pool.execute(
+                "INSERT INTO orders (full_name, email, phone, address, product_id, product_title, product_price, status, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', 'cod')",
+                [fullName, email, phone, address, productId, productTitle, productPrice]
+            );
+
+            res.status(200).json({
+                message: "Đặt hàng thành công",
+                paymentMethod: "cod"
+            });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Lỗi server" });
@@ -134,6 +212,8 @@ export const updateOrderStatus = async (req: Request, res: Response): Promise<vo
         });
     }
 };
+
+
 
 
 

@@ -60,7 +60,7 @@ export default function Login() {
                             <button
                                 type="button"
                                 onClick={handleLogin}
-                                className="transition duration-200 bg-blue-500 hover:bg-[#ffd400] focus:bg-bg-[#ffd400] focus:shadow-sm focus:ring-4 focus:ring-bg-[#ffd400] focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block"
+                                className="transition duration-200 bg-[#ffd400] hover:bg-[#ffd400] focus:bg-bg-[#ffd400] focus:shadow-sm focus:ring-4 focus:ring-bg-[#ffd400] focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block"
                             >
                                 <span className="inline-block mr-2">Login</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block">

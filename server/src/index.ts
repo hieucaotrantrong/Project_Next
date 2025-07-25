@@ -8,6 +8,8 @@ import chatbot from './routes/chatbot';
 import orderRoutes from "./routes/order.routes";
 import supportRouter from "./routes/support";
 import notificationsRoutes from './routes/notifications';
+import walletRoutes from './routes/wallet';
+import adminRoutes from './routes/admin';
 /*------------------------------------
 Dotnev
 --------------------------------------*/
@@ -32,6 +34,8 @@ app.use('/api/chatbot', chatbot);
 app.use('/api/orders', orderRoutes);
 app.use("/api/support", supportRouter);
 app.use('/api/notifications', notificationsRoutes);
+app.use('/api/wallet', walletRoutes);
+app.use('/api/admin', adminRoutes);
 /*------------------------------------
 Start Servers
 --------------------------------------*/
@@ -50,4 +54,8 @@ database.getConnection()
     .catch((err) => {
         console.error('Database connection failed:', err);
     });
+
+
+
+
 
