@@ -14,7 +14,7 @@ import {
     FaWallet,  // Thêm icon ví
 } from "react-icons/fa";
 
-export default function Home() {
+export default function Home({ onFilterChange }) {
     const [user, setUser] = useState(null);
     const [showLocationModal, setShowLocationModal] = useState(false);
     const [provinces, setProvinces] = useState([]);
@@ -27,6 +27,7 @@ export default function Home() {
     const [activeTab, setActiveTab] = useState('province');
     const [searchTerm, setSearchTerm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
     const navigate = useNavigate();
     const { cartItems, getTotalItems, getTotalPrice, updateQuantity, removeFromCart, isCartOpen, setIsCartOpen } = useCart();
 
@@ -34,6 +35,12 @@ export default function Home() {
         const numPrice = Math.floor(parseFloat(price.toString().replace(/\./g, '')));
         return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     };
+
+    useEffect(() => {
+        if (onFilterChange) {
+            onFilterChange(!!(searchQuery || selectedCategory));
+        }
+    }, [searchQuery, selectedCategory, onFilterChange]);
 
     useEffect(() => {
         const savedUser = localStorage.getItem('user');
@@ -219,6 +226,24 @@ export default function Home() {
         return 'Quận 1, Hồ Chí Minh';
     };
 
+    const handleCategoryClick = (categoryLabel) => {
+        // Map từ label hiển thị sang category value
+        const categoryMap = {
+            'Điện thoại': 'phone',
+            'Laptop': 'laptop',
+            'Phụ kiện': 'accessory',
+            'Smartwatch': 'smartwatch',
+            'Đồng Hồ': 'watch',
+            'Tablet': 'tablet'
+        };
+
+        const categoryValue = categoryMap[categoryLabel];
+        if (categoryValue) {
+            setSelectedCategory(categoryValue);
+            setSearchQuery(''); // Clear search khi chọn category
+        }
+    };
+
     return (
         <div>
             {/* Header section với background vàng */}
@@ -230,7 +255,10 @@ export default function Home() {
                             src="/assets/logo.jpg"
                             alt="Logo"
                             className="h-8 object-contain cursor-pointer mr-4"
-                            onClick={() => navigate('/home')}
+                            onClick={() => {
+                                setSearchQuery('');
+                                setSelectedCategory('');
+                            }}
                         />
                         <div className="relative flex-1">
                             <div className="flex items-center bg-white rounded-full px-4 py-2">
@@ -327,11 +355,7 @@ export default function Home() {
                             <div
                                 key={index}
                                 className="flex items-center gap-1 cursor-pointer hover:underline"
-                                onClick={() => {
-                                    if (item.label === "Đơn hàng") {
-                                        navigate('/orders');
-                                    }
-                                }}
+                                onClick={() => handleCategoryClick(item.label)}
                             >
                                 {item.icon}
                                 <span>{item.label}</span>
@@ -443,15 +467,24 @@ export default function Home() {
 
                             </button>
                         </div>
-                    </div>
+                    </
+                    div>
                 </div>
             )}
 
-            {/* Chỉ hiển thị kết quả tìm kiếm khi có searchQuery */}
-            {searchQuery && (
+            {/* Hiển thị kết quả lọc */}
+            {(searchQuery || selectedCategory) ? (
                 <div className="w-full max-w-[1280px] mx-auto px-4 py-6">
-                    <CartPage searchQuery={searchQuery} />
+                    <CartPage
+                        searchQuery={searchQuery}
+                        categoryFilter={selectedCategory}
+                    />
                 </div>
+            ) : (
+                // Chỉ hiển thị các component khác khi KHÔNG có filter
+                <>
+                    {/* Các banner và component khác chỉ hiển thị khi không filter */}
+                </>
             )}
 
             {/* Cart Modal */}
@@ -522,10 +555,24 @@ export default function Home() {
                         )}
                     </div>
                 </div>
+
             )}
         </div>
     );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

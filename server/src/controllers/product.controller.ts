@@ -35,12 +35,14 @@ export const getProductById = async (req: Request, res: Response) => {
 Create Product
 -----------------------------------*/
 export const createProduct = async (req: Request, res: Response) => {
-    const { title, originalPrice, price, discount, tag, image } = req.body;
+    const { title, originalPrice, price, discount, tag, image, category } = req.body;
+
+    console.log('Received data:', req.body);
 
     try {
         const [result] = await pool.query(
-            'INSERT INTO products (title, originalPrice, price, discount, tag, image) VALUES (?, ?, ?, ?, ?, ?)',
-            [title, originalPrice, price, discount, tag, image]
+            'INSERT INTO products (title, originalPrice, price, discount, tag, image, category) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [title, originalPrice, price, discount, tag, image, category]
         );
 
         res.status(201).json({
@@ -50,9 +52,11 @@ export const createProduct = async (req: Request, res: Response) => {
             price,
             discount,
             tag,
-            image
+            image,
+            category
         });
     } catch (err) {
+        console.error('Database error:', err);
         res.status(500).json({ error: 'Lỗi khi thêm sản phẩm' });
     }
 };
@@ -63,13 +67,18 @@ Update prodcut
 -----------------------------------*/
 export const updateProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { title, originalPrice, price, discount, tag, image } = req.body;
+    const { title, originalPrice, price, discount, tag, image, category } = req.body;
+
+    console.log('Update product ID:', id);
+    console.log('Update data:', req.body);
 
     try {
         const [result] = await pool.query(
-            'UPDATE products SET title = ?, originalPrice = ?, price = ?, discount = ?, tag = ?, image = ? WHERE id = ?',
-            [title, originalPrice, price, discount, tag, image, id]
+            'UPDATE products SET title = ?, originalPrice = ?, price = ?, discount = ?, tag = ?, image = ?, category = ? WHERE id = ?',
+            [title, originalPrice, price, discount, tag, image, category, id]
         );
+
+        console.log('Update result:', result);
 
         if ((result as any).affectedRows > 0) {
             res.json({ message: 'Cập nhật sản phẩm thành công' });
@@ -77,13 +86,13 @@ export const updateProduct = async (req: Request, res: Response) => {
             res.status(404).json({ error: 'Sản phẩm không tồn tại' });
         }
     } catch (err) {
+        console.error('Database error:', err);
         res.status(500).json({ error: 'Lỗi khi cập nhật sản phẩm' });
     }
 };
 
-
 /*----------------------------------
-Delete product
+Delete Product
 -----------------------------------*/
 export const deleteProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -92,11 +101,13 @@ export const deleteProduct = async (req: Request, res: Response) => {
         const [result] = await pool.query('DELETE FROM products WHERE id = ?', [id]);
 
         if ((result as any).affectedRows > 0) {
-            res.json({ message: 'Xoá sản phẩm thành công' });
+            res.json({ message: 'Xóa sản phẩm thành công' });
         } else {
             res.status(404).json({ error: 'Sản phẩm không tồn tại' });
         }
     } catch (err) {
-        res.status(500).json({ error: 'Lỗi khi xoá sản phẩm' });
+        console.error('Database error:', err);
+        res.status(500).json({ error: 'Lỗi khi xóa sản phẩm' });
     }
 };
+

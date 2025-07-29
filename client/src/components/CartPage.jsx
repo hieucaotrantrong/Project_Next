@@ -6,7 +6,7 @@ const productsMock = [
 
 ];
 
-const CartPage = ({ searchQuery = '' }) => {
+const CartPage = ({ searchQuery = '', categoryFilter = '' }) => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -24,32 +24,42 @@ const CartPage = ({ searchQuery = '' }) => {
         fetchProducts();
     }, []);
 
-    // Lọc sản phẩm theo từ khóa tìm kiếm
     const filteredProducts = products.filter(product => {
-        if (!searchQuery) return true;
-        return product.title.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesSearch = !searchQuery ||
+            product.title.toLowerCase().includes(searchQuery.toLowerCase());
+
+        const matchesCategory = !categoryFilter ||
+            product.category === categoryFilter;
+
+        return matchesSearch && matchesCategory;
     });
+
+    console.log('Filtered products count:', filteredProducts.length);
 
     return (
         <div className="w-full max-w-[1280px] mx-auto px-4 py-6 min-h-screen">
-            <h1 className="text-1,5xl font-bold mb-6">
-                {searchQuery ? `Kết quả tìm kiếm: "${searchQuery}"` : 'Sản phẩm'}
+            <h1 className="text-xl font-bold mb-6">
+                {searchQuery ? `Kết quả tìm kiếm: "${searchQuery}"` :
+                    categoryFilter ? `Sản phẩm ${categoryFilter.charAt(0).toUpperCase() + categoryFilter.slice(1)}` :
+                        'Sản phẩm'}
+                <span className="text-gray-500 text-sm ml-2">({filteredProducts.length} sản phẩm)</span>
             </h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
-                {filteredProducts.map((item, index) => (
-                    <CartItem key={index} {...item} />
+
+            {/* Grid sản phẩm */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                {filteredProducts.map((product) => (
+                    <CartItem key={product.id} {...product} />
                 ))}
             </div>
-            {filteredProducts.length === 0 && searchQuery && (
-                <p className="text-center text-gray-500 mt-8">
-                    Không tìm thấy sản phẩm nào với từ khóa "{searchQuery}"
-                </p>
-            )}
         </div>
     );
 };
 
 export default CartPage;
+
+
+
+
 
 
 

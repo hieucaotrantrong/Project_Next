@@ -22,6 +22,8 @@ import PromoBanner from './components/PromoBanner';
 import Profile from './pages/Profile';
 import WalletPage from './components/WalletPage';
 import OrderHistory from './components/OrderHistory';
+import { useState } from 'react';
+
 /*----------------------------------
 Home Create
 -----------------------------------*/
@@ -42,11 +44,17 @@ function HomePage() {
 HomePage
 -----------------------------------*/
 function HomeLoggedInPage() {
+  const [hasFilter, setHasFilter] = useState(false);
+
   return (
     <>
-      <Home />
-      <Carousel />
-      <CartPage />
+      <Home onFilterChange={setHasFilter} />
+      {!hasFilter && (
+        <>
+          <Carousel />
+          <CartPage />
+        </>
+      )}
       <ChatBotIcon />
       <Footers />
     </>
@@ -83,6 +91,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

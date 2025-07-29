@@ -17,10 +17,19 @@ const AdminPage = () => {
         discount: '',
         tag: '',
         image: '',
+        category: 'phone'  // Chỉ thêm category
     });
     const [editingProduct, setEditingProduct] = useState(null);
     const [preview, setPreview] = useState('');
     const navigate = useNavigate();
+    const categories = [
+        { value: 'phone', label: '📱 Điện thoại' },
+        { value: 'laptop', label: '💻 Laptop' },
+        { value: 'accessory', label: '🎧 Phụ kiện' },
+        { value: 'smartwatch', label: '⌚ Smartwatch' },
+        { value: 'watch', label: '⏰ Đồng hồ' },
+        { value: 'tablet', label: '📱 Tablet' }
+    ];
     /*------------------------------------------
     Logout
     -------------------------------------------*/
@@ -54,19 +63,30 @@ const AdminPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Chuyển đổi giá về số thuần (bỏ dấu chấm)
             const formData = {
-                ...form,
+                title: form.title,
                 originalPrice: form.originalPrice.replace(/\./g, ''),
-                price: form.price.replace(/\./g, '')
+                price: form.price.replace(/\./g, ''),
+                discount: form.discount,
+                tag: form.tag,
+                image: form.image,
+                category: form.category
             };
 
+            console.log('Sending data:', formData);
+            console.log('Editing product:', editingProduct);
+
             if (editingProduct) {
-                await axios.put(`http://localhost:5000/api/products/${editingProduct.id}`, formData);
+                const response = await axios.put(`http://localhost:5000/api/products/${editingProduct.id}`, formData);
+                console.log('Update response:', response.data);
+                alert('Cập nhật sản phẩm thành công!');
                 setEditingProduct(null);
             } else {
-                await axios.post('http://localhost:5000/api/products', formData);
+                const response = await axios.post('http://localhost:5000/api/products', formData);
+                console.log('Create response:', response.data);
+                alert('Thêm sản phẩm thành công!');
             }
+
             setForm({
                 title: '',
                 originalPrice: '',
@@ -74,11 +94,13 @@ const AdminPage = () => {
                 discount: '',
                 tag: '',
                 image: '',
+                category: 'phone'
             });
             setPreview('');
             fetchProducts();
         } catch (error) {
-            console.error('Lỗi khi thêm/sửa sản phẩm:', error);
+            console.error('Chi tiết lỗi:', error.response?.data || error.message);
+            alert(`Lỗi: ${error.response?.data?.error || error.message}`);
         }
     };
     /*----------------------------------
@@ -97,13 +119,19 @@ const AdminPage = () => {
       -------------------------------------------*/
     const handleEdit = (product) => {
         setEditingProduct(product);
+
+        // Chuyển về số nguyên trước khi format để loại bỏ .00
+        const cleanOriginalPrice = Math.floor(parseFloat(product.originalPrice));
+        const cleanPrice = Math.floor(parseFloat(product.price));
+
         setForm({
             title: product.title,
-            originalPrice: product.originalPrice,
-            price: product.price,
+            originalPrice: cleanOriginalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'),
+            price: cleanPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'),
             discount: product.discount,
             tag: product.tag,
             image: product.image,
+            category: product.category || 'phone'
         });
         setPreview(product.image);
     };
@@ -111,7 +139,9 @@ const AdminPage = () => {
       
     -------------------------------------------*/
     const formatPrice = (value) => {
+        // Loại bỏ tất cả ký tự không phải số
         const numericValue = value.replace(/\D/g, '');
+        // Format với dấu chấm ngăn cách hàng nghìn
         return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     };
 
@@ -124,6 +154,17 @@ const AdminPage = () => {
         // Chuyển về số nguyên trước khi format
         const numPrice = Math.floor(parseFloat(price));
         return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result);
+                setForm({ ...form, image: reader.result });
+            };
+            reader.readAsDataURL(file);
+        }
     };
     return (
         <div className="max-w-6xl mx-auto p-6">
@@ -194,32 +235,50 @@ const AdminPage = () => {
                 <>
                     <h1 className="text-3xl font-bold mb-6 text-center"> Quản lý sản phẩm</h1>
 
-                    {/* Form */}
-                    <form
-                        onSubmit={handleSubmit}
-                        className="bg-white p-6 rounded-lg shadow grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"
-                    >
+                    {/* Form giữ nguyên upload file, chỉ thêm category */}
+                    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                         <input
                             type="text"
                             placeholder="Tên sản phẩm"
                             value={form.title}
                             onChange={(e) => setForm({ ...form, title: e.target.value })}
                             className="border border-gray-300 rounded px-4 py-2"
+                            required
                         />
+
+                        {/* Thêm category dropdown */}
+                        <select
+                            value={form.category}
+                            onChange={(e) => setForm({ ...form, category: e.target.value })}
+                            className="border border-gray-300 rounded px-4 py-2"
+                            required
+                        >
+                            {categories.map((cat) => (
+                                <option key={cat.value} value={cat.value}>
+                                    {cat.label}
+                                </option>
+                            ))}
+                        </select>
+
+                        {/* Giữ nguyên các field khác */}
                         <input
                             type="text"
                             placeholder="Giá gốc (VD: 46.637.000)"
                             value={form.originalPrice}
                             onChange={(e) => handlePriceChange('originalPrice', e.target.value)}
                             className="border border-gray-300 rounded px-4 py-2"
+                            required
                         />
+
                         <input
                             type="text"
-                            placeholder="Giá khuyến mãi (VD: 42.690.000)"
+                            placeholder="Giá bán (VD: 42.690.000)"
                             value={form.price}
                             onChange={(e) => handlePriceChange('price', e.target.value)}
                             className="border border-gray-300 rounded px-4 py-2"
+                            required
                         />
+
                         <input
                             type="text"
                             placeholder="Giảm giá (%)"
@@ -227,6 +286,7 @@ const AdminPage = () => {
                             onChange={(e) => setForm({ ...form, discount: e.target.value })}
                             className="border border-gray-300 rounded px-4 py-2"
                         />
+
                         <input
                             type="text"
                             placeholder="Tag"
@@ -234,38 +294,28 @@ const AdminPage = () => {
                             onChange={(e) => setForm({ ...form, tag: e.target.value })}
                             className="border border-gray-300 rounded px-4 py-2"
                         />
-                        <div>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => {
-                                    const file = e.target.files[0];
-                                    if (file) {
-                                        const imagePath = `/assets/${file.name}`;
-                                        setForm({ ...form, image: imagePath });
 
-                                        const reader = new FileReader();
-                                        reader.onloadend = () => {
-                                            setPreview(reader.result);
-                                        };
-                                        reader.readAsDataURL(file);
-                                    }
-                                }}
-                                className="border border-gray-300 rounded px-4 py-2 w-full"
-                            />
-                            {preview && (
+                        {/* File upload thay vì URL input */}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="border border-gray-300 rounded px-4 py-2"
+                        />
+
+                        {/* Preview image */}
+                        {preview && (
+                            <div className="col-span-2">
                                 <img
                                     src={preview}
                                     alt="Preview"
-                                    className="w-24 h-24 object-cover mt-2 border rounded"
+                                    className="w-32 h-32 object-cover rounded border"
                                 />
-                            )}
-                        </div>
-                        <button
-                            type="submit"
-                            className="col-span-1 md:col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-                        >
-                            {editingProduct ? ' Cập nhật sản phẩm' : '➕ Thêm sản phẩm'}
+                            </div>
+                        )}
+
+                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            {editingProduct ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm'}
                         </button>
                     </form>
 
@@ -317,6 +367,31 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
