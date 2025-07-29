@@ -11,8 +11,20 @@ const Notifications = () => {
         try {
             const userEmail = localStorage.getItem('userEmail');
             const response = await axios.get(`http://localhost:5000/api/notifications/${userEmail}`);
-            setNotifications(response.data);
-            setUnread(response.data.filter(notif => !notif.is_read).length);
+
+            const newNotifications = response.data;
+            const oldCount = notifications.length;
+
+            // Nếu có notification mới về đơn hàng
+            if (newNotifications.length > oldCount) {
+                const latestNotif = newNotifications[0];
+                if (latestNotif.title.includes('Cập nhật đơn hàng')) {
+                    localStorage.setItem('orderUpdate', 'true');
+                }
+            }
+
+            setNotifications(newNotifications);
+            setUnread(newNotifications.filter(notif => !notif.is_read).length);
         } catch (error) {
             console.error('Lỗi khi tải thông báo:', error);
         }
@@ -88,3 +100,4 @@ const Notifications = () => {
 };
 
 export default Notifications;
+

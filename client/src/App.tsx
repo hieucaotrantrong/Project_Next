@@ -21,6 +21,7 @@ import SupportPage from "./components/SupportPage";
 import PromoBanner from './components/PromoBanner';
 import Profile from './pages/Profile';
 import WalletPage from './components/WalletPage';
+import OrderHistory from './components/OrderHistory';
 /*----------------------------------
 Home Create
 -----------------------------------*/
@@ -74,6 +75,7 @@ function App() {
             </PrivateRoute>
           } />
           <Route path="/wallet" element={<WalletPage />} />
+          <Route path="/orders" element={<OrderHistory />} />
         </Routes>
       </Router>
     </CartProvider>
@@ -81,6 +83,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

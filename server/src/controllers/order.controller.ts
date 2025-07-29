@@ -220,6 +220,23 @@ export const updateOrderStatus = async (req: Request, res: Response): Promise<vo
     }
 };
 
+export const getUserOrders = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { email } = req.params;
+        
+        const [orders] = await pool.execute(
+            'SELECT * FROM orders WHERE email = ? ORDER BY created_at DESC',
+            [email]
+        );
+        
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error('Lỗi khi lấy đơn hàng của user:', error);
+        res.status(500).json({ error: 'Lỗi server' });
+    }
+};
+
+
 
 
 

@@ -224,17 +224,17 @@ export default function Home() {
             {/* Header section với background vàng */}
             <header className="w-full bg-[#ffd400]">
                 <div className="w-full max-w-[1280px] mx-auto flex items-center justify-between px-4 py-2">
-                    {/* Logo + Search */}
+                    {/* Logo + Search - Giữ nguyên kích thước cũ */}
                     <div className="flex items-center flex-1 max-w-[600px]">
                         <img
                             src="/assets/logo.jpg"
                             alt="Logo"
-                            className="h-8 object-contain cursor-pointer"
+                            className="h-8 object-contain cursor-pointer mr-4"
                             onClick={() => navigate('/home')}
                         />
-                        <div className="relative ml-2 flex-1">
-                            <div className="flex items-center bg-white rounded-full px-3 py-1">
-                                <FaSearch className="text-gray-500 text-sm" />
+                        <div className="relative flex-1">
+                            <div className="flex items-center bg-white rounded-full px-4 py-2">
+                                <FaSearch className="text-gray-500 text-sm mr-3" />
                                 <input
                                     type="text"
                                     placeholder="Bạn tìm gì..."
@@ -247,18 +247,25 @@ export default function Home() {
                     </div>
 
                     {/* Account + Cart + Location */}
-                    <div className="flex items-center gap-6 ml-4">
+                    <div className="flex items-center gap-6 ml-6">
                         {user ? (
                             <>
                                 <Notifications />
 
-                                {/* Thêm icon ví */}
                                 <div
                                     className="flex items-center gap-1 text-sm hover:underline cursor-pointer"
                                     onClick={() => navigate('/wallet')}
                                 >
                                     <FaWallet />
-                                    <span>Ví của tôi</span>
+                                    <span>Ví</span>
+                                </div>
+
+                                <div
+                                    className="flex items-center gap-1 text-sm hover:underline cursor-pointer"
+                                    onClick={() => navigate('/orders')}
+                                >
+                                    <span>📦</span>
+                                    <span>Đơn hàng</span>
                                 </div>
 
                                 <div className="flex items-center gap-2">
@@ -269,8 +276,8 @@ export default function Home() {
                                         onClick={() => navigate('/profile')}
                                         title="Xem profile"
                                     />
-                                    <span className="text-sm cursor-pointer" onClick={() => navigate('/profile')}>
-                                        Xin chào, {user.first_name}
+                                    <span className="text-sm cursor-pointer max-w-[100px] truncate" onClick={() => navigate('/profile')}>
+                                        {user.first_name}
                                     </span>
                                 </div>
                             </>
@@ -290,32 +297,42 @@ export default function Home() {
                             onClick={() => navigate('/cart')}
                         >
                             <FaShoppingCart />
-                            <span>Giỏ hàng ({getTotalItems()})</span>
+                            <span>Giỏ ({getTotalItems()})</span>
                         </div>
                         <Link to="/support" className="text-sm font-semibold text-gray-900">
                             Hỗ trợ
                         </Link>
-                        <button
-                            onClick={handleLogout}
-                            className="text-sm hover:underline"
-                        >
-                            Đăng xuất
-                        </button>
+                        {user && (
+                            <button
+                                onClick={handleLogout}
+                                className="text-sm hover:underline"
+                            >
+                                Thoát
+                            </button>
+                        )}
                         <div
                             className="flex items-center gap-1 bg-yellow-300 px-3 py-2 rounded-full cursor-pointer text-sm hover:bg-yellow-400 transition-colors"
                             onClick={() => setShowLocationModal(true)}
                         >
                             <FaMapMarkerAlt />
-                            <span className="truncate max-w-[120px]">{currentAddress}</span>
+                            <span className="truncate max-w-[150px]">{currentAddress}</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Bottom Menu */}
-                <div className="w-full max-w-[1280px] mx-auto px-4 py-3 text-sm font-normal">
+                {/* Bottom Menu - Giảm padding */}
+                <div className="w-full max-w-[1280px] mx-auto px-4 py-2 text-sm font-normal"> {/* Giảm py từ 3 xuống 2 */}
                     <div className="flex justify-between items-center">
                         {menuItems.map((item, index) => (
-                            <div key={index} className="flex items-center gap-1 cursor-pointer hover:underline">
+                            <div
+                                key={index}
+                                className="flex items-center gap-1 cursor-pointer hover:underline"
+                                onClick={() => {
+                                    if (item.label === "Đơn hàng") {
+                                        navigate('/orders');
+                                    }
+                                }}
+                            >
                                 {item.icon}
                                 <span>{item.label}</span>
                             </div>
@@ -509,6 +526,9 @@ export default function Home() {
         </div>
     );
 }
+
+
+
 
 
 

@@ -30,21 +30,23 @@ async function chatHandler(req: ChatRequest, res: Response): Promise<void> {
             Handle keywords
             -----------------------------------*/
             const keywords = prompt.toLowerCase()
-                .replace(/có|không|cái|ko|những|các|sản phẩm|hay|là/g, '')
+                .replace(/có|không|cái|ko|những|các|sản phẩm|hay|là|nào|gì|thế|như|vậy/g, '')
                 .trim()
                 .split(' ')
-                .filter(word => word.length > 1);
+                .filter(word => word.length > 2); // Tăng từ 1 lên 2 để loại bỏ "nào"
             /*----------------------------------
             Handle response 
             -----------------------------------*/
             if (keywords.length > 0) {
-                const searchQuery = keywords.map(() => 'LOWER(title) LIKE LOWER(?)').join(' AND ');
+                // Đổi từ AND sang OR để tìm linh hoạt hơn
+                const searchQuery = keywords.map(() => 'LOWER(title) LIKE LOWER(?)').join(' OR ');
                 const searchParams = keywords.map(term => `%${term}%`);
+
                 /*----------------------------------
                 Connect database
                 -----------------------------------*/
                 const [products] = await pool.execute(
-                    `SELECT * FROM products WHERE ${searchQuery}`,
+                    `SELECT * FROM products WHERE ${searchQuery} ORDER BY title`,
                     searchParams
                 );
                 /*----------------------------------
