@@ -12,7 +12,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
@@ -66,11 +66,25 @@ services:
     container_name: clothes_frontend
     restart: always
     ports:
-      - "80:80"
+      - "5001:80"
     depends_on:
       - backend
     networks:
       - app_network
+
+  server:
+    build: ./server
+    ports:
+      - "3001:3000"
+    env_file:
+      - ./server/.env
+    restart: unless-stopped
+
+  client:
+    build: ./client
+    ports:
+      - "80:80"
+    restart: unless-stopped
 
 networks:
   app_network:

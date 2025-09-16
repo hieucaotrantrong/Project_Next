@@ -1,20 +1,22 @@
 # Sử dụng Node.js image chính thức
-FROM node:18-alpine
+FROM node:18
 
 # Tạo thư mục làm việc
 WORKDIR /app
 
 # Copy package.json và package-lock.json
-COPY package*.json ./
+COPY package.json ./
+COPY tsconfig.json ./
+COPY ./src ./src
 
-# Cài đặt dependencies
+# Cài đặt các package
 RUN npm install
 
-# Copy source code
-COPY . .
+# Biên dịch TypeScript sang JavaScript
+RUN npm run build
 
-# Expose port mà ứng dụng sẽ chạy
-EXPOSE 5000
+# Mở port (ví dụ: 3000)
+EXPOSE 3000
 
-# Khởi động ứng dụng
-CMD ["npm", "run", "start"]
+# Chạy ứng dụng
+CMD ["npm", "start"]

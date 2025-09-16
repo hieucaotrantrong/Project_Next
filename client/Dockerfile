@@ -1,37 +1,29 @@
 # Build stage
-FROM node:18-alpine as build
+FROM node:18 AS build
 
-# Tạo thư mục làm việc
 WORKDIR /app
 
-# Copy package.json và package-lock.json
-COPY package*.json ./
+COPY package.json ./
+COPY vite.config.ts ./
+COPY tsconfig.json ./
+COPY tsconfig.app.json ./
+COPY tsconfig.node.json ./
+COPY postcss.config.js ./
+COPY tailwind.config.js ./
+COPY index.html ./ 
+COPY ./src ./src
+COPY ./public ./public
 
-# Cài đặt dependencies
 RUN npm install
+RUN npm run build
 
-# Copy source code
-COPY . .
-
-# Hiển thị thông tin debug
-RUN ls -la
-RUN echo "Node version: $(node -v)"
-RUN echo "NPM version: $(npm -v)"
-
-# Thử build với --force flag
-RUN npm run build || (echo "Build failed, trying with --force" && npm run build -- --force)
-
-# Production stage
+# Sử dụng nginx để serve file tĩnh
 FROM nginx:alpine
 
-# Copy built files từ build stage
 COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy cấu hình Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose port
 EXPOSE 80
 
-# Khởi động Nginx
 CMD ["nginx", "-g", "daemon off;"]
+
